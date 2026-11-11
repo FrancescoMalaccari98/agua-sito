@@ -1,6 +1,6 @@
-/* Agua — interazioni */
+/* Aqua — interazioni */
 (() => {
-  window.aguaReady = true;
+  window.aquaReady = true;
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const root = document.documentElement;
@@ -14,7 +14,7 @@
   const intro = $('.intro');
   if (root.classList.contains('has-intro') && !reduceMotion) {
     document.body.style.overflow = 'hidden';
-    try { sessionStorage.setItem('agua-intro', '1'); } catch (e) {}
+    try { sessionStorage.setItem('aqua-intro', '1'); } catch (e) {}
     setTimeout(() => {
       intro.classList.add('is-leaving');
       setTimeout(startHero, 350);

@@ -1,4 +1,4 @@
-# Agua – Sito
+# Aqua – Sito
 
 ## Branch
 - **main** – versione finale / per accettazione del cliente
