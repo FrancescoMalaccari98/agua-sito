@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agua — Cocktail bar</title>
+  <meta name="description" content="Agua, cocktail bar. Miscelazione d'autore, ghiaccio tagliato a mano e il tempo giusto per goderseli.">
+  <meta name="theme-color" content="#0E1514">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Vai al contenuto</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="site-header__inner">
+      <a class="wordmark" href="#top" aria-label="Agua, torna all'inizio">Agua</a>
+
+      <nav class="nav" aria-label="Navigazione principale">
+        <ul class="nav__list">
+          <li><a href="#filosofia">Filosofia</a></li>
+          <li><a href="#carta">La carta</a></li>
+          <li><a href="#bar">Il bar</a></li>
+          <li><a href="#contatti">Contatti</a></li>
+        </ul>
+      </nav>
+
+      <a class="btn btn--ghost site-header__cta" href="#prenota">Prenota</a>
+
+      <button class="burger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Apri il menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <nav aria-label="Menu mobile">
+      <ol class="mobile-menu__list">
+        <li><a href="#filosofia"><span>01</span>Filosofia</a></li>
+        <li><a href="#carta"><span>02</span>La carta</a></li>
+        <li><a href="#bar"><span>03</span>Il bar</a></li>
+        <li><a href="#prenota"><span>04</span>Prenota</a></li>
+        <li><a href="#contatti"><span>05</span>Contatti</a></li>
+      </ol>
+    </nav>
+    <p class="mobile-menu__foot">Via del Porto 12 · Aperto dalle 18:30</p>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__media">
+        <img
+          src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1800&q=80"
+          srcset="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=75 800w,
+                  https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1400&q=80 1400w,
+                  https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=2200&q=80 2200w"
+          sizes="100vw" alt="Un bartender versa un cocktail ambrato su un grande cubo di ghiaccio" fetchpriority="high">
+      </div>
+
+      <div class="hero__content wrap">
+        <p class="eyebrow hero__eyebrow" data-hero-step>Cocktail bar<span class="hide-sm"> &nbsp;·&nbsp; Miscelazione d'autore</span></p>
+        <h1 class="hero__title" id="hero-title">
+          <span class="line"><span data-hero-step>L'arte</span></span>
+          <span class="line"><em data-hero-step>del bere</em></span>
+          <span class="line"><span data-hero-step>lentamente.</span></span>
+        </h1>
+        <div class="hero__actions" data-hero-step>
+          <a class="btn btn--solid" href="#prenota">Prenota un tavolo</a>
+          <a class="link-arrow" href="#carta">Scopri la carta <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <div class="hero__meta wrap" data-hero-step>
+        <p class="status"><span class="status__dot" aria-hidden="true"></span><span data-open-status>Stasera dalle 18:30</span></p>
+        <a class="scroll-cue" href="#filosofia" aria-label="Scorri alla sezione Filosofia"><span></span></a>
+      </div>
+    </section>
+
+    <!-- ============ FILOSOFIA ============ -->
+    <section class="philosophy section" id="filosofia" aria-labelledby="philo-title">
+      <div class="wrap philosophy__grid">
+        <div class="section-index reveal">
+          <span class="section-index__num">01</span>
+          <span class="section-index__label">Filosofia</span>
+        </div>
+
+        <div class="philosophy__text">
+          <h2 class="display reveal" id="philo-title">
+            Un bancone, poche sedute, <em>nessuna fretta.</em>
+          </h2>
+          <p class="lead reveal">
+            Agua nasce dall'idea che un cocktail sia una conversazione: tra chi lo prepara e chi lo beve,
+            tra un distillato e la stagione che lo accompagna. Lavoriamo con produttori vicini, sciroppi fatti in casa
+            e ghiaccio limpido tagliato a mano, ogni giorno.
+          </p>
+          <dl class="facts reveal">
+            <div><dt>24</dt><dd>coperti, non uno di più</dd></div>
+            <div><dt>12</dt><dd>signature in carta, ogni stagione</dd></div>
+            <div><dt>0</dt><dd>preparati industriali</dd></div>
+          </dl>
+        </div>
+
+        <figure class="philosophy__figure reveal">
+          <div class="frame">
+            <img loading="lazy"
+              src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80"
+              alt="Cocktail ambrato con agrumi e rosmarino su un bancone scuro" width="900" height="1125">
+          </div>
+          <figcaption>Old Fashioned affumicato al legno di ciliegio</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ LA CARTA ============ -->
+    <section class="menu section" id="carta" aria-labelledby="menu-title">
+      <div class="wrap">
+        <div class="menu__head">
+          <div class="section-index reveal">
+            <span class="section-index__num">02</span>
+            <span class="section-index__label">La carta</span>
+          </div>
+          <h2 class="display reveal" id="menu-title">Ciò che versiamo <em>stasera</em></h2>
+
+          <div class="tabs reveal" role="tablist" aria-label="Categorie della carta">
+            <button role="tab" id="tab-signature" aria-controls="panel-signature" aria-selected="true">Signature</button>
+            <button role="tab" id="tab-classici" aria-controls="panel-classici" aria-selected="false" tabindex="-1">Classici</button>
+            <button role="tab" id="tab-zero" aria-controls="panel-zero" aria-selected="false" tabindex="-1">Zero alcol</button>
+            <span class="tabs__ink" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <div class="menu__body">
+          <div class="menu__panels">
+            <ul class="drinks" role="tabpanel" id="panel-signature" aria-labelledby="tab-signature">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=700&q=80">
+                <span class="drink__name">Marea</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">14</span>
+                <span class="drink__notes">Gin al finocchietto marino, vermouth bianco, bitter al bergamotto</span>
+              </li>
+              <li class="drink" data-img="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=700&q=80">
+                <span class="drink__name">Ottone</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">15</span>
+                <span class="drink__notes">Rye whiskey, amaro alle erbe, miele di castagno, fumo di ciliegio</span>
+              </li>
+              <li class="drink" data-img="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=700&q=80">
+                <span class="drink__name">Ora blu</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">13</span>
+                <span class="drink__notes">Rum agricolo, lime, sciroppo di tè affumicato, soda al pompelmo</span>
+              </li>
+              <li class="drink" data-img="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=700&q=80">
+                <span class="drink__name">Fico d'inverno</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">14</span>
+                <span class="drink__notes">Cognac, fico nero, sherry oloroso, gocce di cacao</span>
+              </li>
+            </ul>
+
+            <ul class="drinks" role="tabpanel" id="panel-classici" aria-labelledby="tab-classici" hidden>
+              <li class="drink" data-img="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=700&q=80">
+                <span class="drink__name">Negroni</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">11</span>
+                <span class="drink__notes">Gin, bitter, vermouth rosso. Mescolato, mai agitato</span>
+              </li>
+              <li class="drink" data-img="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=700&q=80">
+                <span class="drink__name">Old Fashioned</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">12</span>
+                <span class="drink__notes">Bourbon, zucchero demerara, Angostura, scorza d'arancia</span>
+              </li>
+              <li class="drink" data-img="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=700&q=80">
+                <span class="drink__name">Martini</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">12</span>
+                <span class="drink__notes">Gin o vodka, vermouth secco, oliva o twist di limone</span>
+              </li>
+              <li class="drink" data-img="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=700&q=80">
+                <span class="drink__name">Daiquiri</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">11</span>
+                <span class="drink__notes">Rum bianco, lime, zucchero. Nient'altro</span>
+              </li>
+            </ul>
+
+            <ul class="drinks" role="tabpanel" id="panel-zero" aria-labelledby="tab-zero" hidden>
+              <li class="drink" data-img="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=700&q=80">
+                <span class="drink__name">Giardino</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">9</span>
+                <span class="drink__notes">Cetriolo, basilico, verjus, tonica artigianale</span>
+              </li>
+              <li class="drink" data-img="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=700&q=80">
+                <span class="drink__name">Agrumeto</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">9</span>
+                <span class="drink__notes">Arancia rossa, chinotto, rosmarino, soda</span>
+              </li>
+              <li class="drink" data-img="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=700&q=80">
+                <span class="drink__name">Brace</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">10</span>
+                <span class="drink__notes">Tè lapsang affumicato, miele, limone, bitter analcolico</span>
+              </li>
+            </ul>
+          </div>
+
+          <figure class="menu__preview" aria-hidden="true">
+            <img alt="" src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=700&q=80">
+          </figure>
+        </div>
+
+        <p class="menu__foot reveal">Prezzi in euro. La carta cambia con le stagioni; chiedete al bancone il fuori menu della sera.</p>
+      </div>
+    </section>
+
+    <!-- ============ CITAZIONE ============ -->
+    <section class="quote" aria-label="Citazione">
+      <div class="quote__media" data-parallax>
+        <img loading="lazy"
+          src="https://images.unsplash.com/photo-1525268323446-0505b6fe7778?auto=format&fit=crop&w=2000&q=75"
+          alt="" >
+      </div>
+      <blockquote class="quote__text wrap reveal">
+        <p>«Il ghiaccio è l'ingrediente che nessuno nota, <em>finché non è perfetto.</em>»</p>
+        <footer>— Il nostro capo barman</footer>
+      </blockquote>
+    </section>
+
+    <!-- ============ IL BAR ============ -->
+    <section class="space section" id="bar" aria-labelledby="space-title">
+      <div class="wrap">
+        <div class="space__head">
+          <div class="section-index reveal">
+            <span class="section-index__num">03</span>
+            <span class="section-index__label">Il bar</span>
+          </div>
+          <h2 class="display reveal" id="space-title">Luce bassa, ottone, <em>legno scuro.</em></h2>
+          <p class="lead reveal">Un'unica sala raccolta attorno al bancone. Si viene per un drink, si resta per la conversazione.</p>
+        </div>
+
+        <div class="gallery">
+          <figure class="gallery__item gallery__item--a reveal">
+            <div class="frame"><img loading="lazy" src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1400&q=80" alt="Bancone illuminato da lampadine calde con sgabelli in fila"></div>
+            <figcaption><span>I.</span> Il bancone</figcaption>
+          </figure>
+          <figure class="gallery__item gallery__item--b reveal">
+            <div class="frame"><img loading="lazy" src="https://images.unsplash.com/photo-1582819509237-d5b75f20ff7a?auto=format&fit=crop&w=900&q=80" alt="Bottiglie di distillati allineate su una mensola"></div>
+            <figcaption><span>II.</span> La bottigliera</figcaption>
+          </figure>
+          <figure class="gallery__item gallery__item--c reveal">
+            <div class="frame"><img loading="lazy" src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=1200&q=80" alt="Sala del bar con luci soffuse e scaffali di bottiglie"></div>
+            <figcaption><span>III.</span> La sala</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRENOTA + CONTATTI ============ -->
+    <section class="visit section" id="prenota" aria-labelledby="book-title">
+      <div class="wrap visit__grid">
+        <div class="visit__form-col">
+          <div class="section-index reveal">
+            <span class="section-index__num">04</span>
+            <span class="section-index__label">Prenota</span>
+          </div>
+          <h2 class="display reveal" id="book-title">Riserviamo <em>il vostro posto.</em></h2>
+          <p class="lead reveal">Per gruppi oltre le sei persone scriveteci direttamente. Il bancone resta sempre libero per chi passa senza prenotare.</p>
+
+          <form class="form reveal" id="booking-form" novalidate>
+            <div class="field field--full">
+              <input id="f-name" name="nome" type="text" autocomplete="name" placeholder=" " required>
+              <label for="f-name">Nome e cognome</label>
+              <span class="field__error" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <input id="f-date" name="data" type="date" required>
+              <label for="f-date" class="is-static">Data</label>
+              <span class="field__error" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <select id="f-time" name="ora" required>
+                <option value="" disabled selected>—</option>
+                <option>18:30</option><option>19:30</option><option>20:30</option>
+                <option>21:30</option><option>22:30</option><option>23:30</option>
+              </select>
+              <label for="f-time" class="is-static">Orario</label>
+              <span class="field__error" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <div class="stepper" role="group" aria-label="Numero di persone">
+                <button type="button" data-step="-1" aria-label="Una persona in meno">−</button>
+                <output id="f-guests" name="persone" aria-live="polite">2</output>
+                <button type="button" data-step="1" aria-label="Una persona in più">+</button>
+              </div>
+              <span class="field__label-static">Persone</span>
+            </div>
+            <div class="field">
+              <input id="f-phone" name="telefono" type="tel" autocomplete="tel" placeholder=" " required>
+              <label for="f-phone">Telefono</label>
+              <span class="field__error" aria-live="polite"></span>
+            </div>
+            <div class="field field--full">
+              <textarea id="f-notes" name="note" rows="2" placeholder=" "></textarea>
+              <label for="f-notes">Note (allergie, occasioni speciali)</label>
+            </div>
+            <div class="form__submit field--full">
+              <button class="btn btn--solid" type="submit">Invia la richiesta</button>
+              <p class="form__hint">Vi confermeremo il tavolo entro un'ora.</p>
+            </div>
+            <p class="form__success field--full" role="status" hidden></p>
+          </form>
+        </div>
+
+        <aside class="visit__info" id="contatti" aria-labelledby="info-title">
+          <div class="section-index reveal">
+            <span class="section-index__num">05</span>
+            <span class="section-index__label">Contatti</span>
+          </div>
+          <h2 class="visit__info-title reveal" id="info-title">Dove trovarci</h2>
+
+          <address class="info-block reveal">
+            Via del Porto 12<br>
+            00100 Città
+            <a class="link-arrow" href="https://maps.google.com/?q=Via+del+Porto+12" target="_blank" rel="noopener">Indicazioni <span aria-hidden="true">↗</span></a>
+          </address>
+
+          <div class="info-block reveal">
+            <h3 class="info-block__label">Orari</h3>
+            <table class="hours">
+              <tbody>
+                <tr data-days="1"><th scope="row">Lunedì</th><td>Chiuso</td></tr>
+                <tr data-days="2,3,4"><th scope="row">Martedì — Giovedì</th><td>18:30 — 01:00</td></tr>
+                <tr data-days="5,6"><th scope="row">Venerdì — Sabato</th><td>18:30 — 02:00</td></tr>
+                <tr data-days="0"><th scope="row">Domenica</th><td>18:00 — 00:00</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="info-block reveal">
+            <h3 class="info-block__label">Scriveteci</h3>
+            <a class="info-link" href="tel:+390000000000">+39 000 000 0000</a>
+            <a class="info-link" href="mailto:ciao@agua.bar">ciao@agua.bar</a>
+            <a class="info-link" href="https://instagram.com/" target="_blank" rel="noopener">Instagram ↗</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <p class="site-footer__mark">Agua</p>
+      <p class="site-footer__small">© <span data-year>2026</span> Agua cocktail bar · P.IVA 00000000000</p>
+      <p class="site-footer__small">Bevi responsabilmente.</p>
+      <a class="site-footer__top" href="#top">Torna su ↑</a>
+    </div>
+  </footer>
+
+  <div class="grain" aria-hidden="true"></div>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
