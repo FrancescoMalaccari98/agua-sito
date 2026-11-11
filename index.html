@@ -6,7 +6,10 @@
   <title>Agua — Cocktail bar</title>
   <meta name="description" content="Agua, cocktail bar. Miscelazione d'autore, ghiaccio tagliato a mano e il tempo giusto per goderseli.">
   <meta name="theme-color" content="#0E1514">
-  <script>document.documentElement.classList.add('js')</script>
+  <script>
+    document.documentElement.classList.add('js');
+    try { if (!sessionStorage.getItem('agua-intro')) document.documentElement.classList.add('has-intro'); } catch (e) {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
@@ -15,6 +18,14 @@
 </head>
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
+
+  <!-- ============ INTRO (solo alla prima visita della sessione) ============ -->
+  <div class="intro" aria-hidden="true">
+    <div class="intro__mark">
+      <span>A</span><span>G</span><span>U</span><span>A</span>
+    </div>
+    <span class="intro__line"></span>
+  </div>
 
   <!-- ============ HEADER ============ -->
   <header class="site-header" id="top">
@@ -25,12 +36,12 @@
         <ul class="nav__list">
           <li><a href="#filosofia">Filosofia</a></li>
           <li><a href="#carta">La carta</a></li>
+          <li><a href="#rito">Il rito</a></li>
           <li><a href="#bar">Il bar</a></li>
-          <li><a href="#contatti">Contatti</a></li>
         </ul>
       </nav>
 
-      <a class="btn btn--ghost site-header__cta" href="#prenota">Prenota</a>
+      <a class="btn btn--ghost site-header__cta" href="#contatti">Dove siamo</a>
 
       <button class="burger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Apri il menu">
         <span></span><span></span>
@@ -43,12 +54,12 @@
       <ol class="mobile-menu__list">
         <li><a href="#filosofia"><span>01</span>Filosofia</a></li>
         <li><a href="#carta"><span>02</span>La carta</a></li>
-        <li><a href="#bar"><span>03</span>Il bar</a></li>
-        <li><a href="#prenota"><span>04</span>Prenota</a></li>
-        <li><a href="#contatti"><span>05</span>Contatti</a></li>
+        <li><a href="#rito"><span>03</span>Il rito</a></li>
+        <li><a href="#bar"><span>04</span>Il bar</a></li>
+        <li><a href="#contatti"><span>05</span>Dove siamo</a></li>
       </ol>
     </nav>
-    <p class="mobile-menu__foot">Via del Porto 12 · Aperto dalle 18:30</p>
+    <p class="mobile-menu__foot">Via del Porto 12 · <span data-open-status>Stasera dalle 18:30</span></p>
   </div>
 
   <main id="main">
@@ -72,18 +83,19 @@
           <span class="line"><span data-hero-step>lentamente.</span></span>
         </h1>
         <div class="hero__actions" data-hero-step>
-          <a class="btn btn--solid" href="#prenota">Prenota un tavolo</a>
-          <a class="link-arrow" href="#carta">Scopri la carta <span aria-hidden="true">→</span></a>
+          <a class="btn btn--solid" href="#carta">Scopri la carta</a>
+          <a class="link-arrow" href="#contatti">Dove trovarci <span aria-hidden="true">→</span></a>
         </div>
       </div>
 
       <div class="hero__meta wrap" data-hero-step>
         <p class="status"><span class="status__dot" aria-hidden="true"></span><span data-open-status>Stasera dalle 18:30</span></p>
+        <p class="hero__address hide-sm">Via del Porto 12</p>
         <a class="scroll-cue" href="#filosofia" aria-label="Scorri alla sezione Filosofia"><span></span></a>
       </div>
     </section>
 
-    <!-- ============ FILOSOFIA ============ -->
+    <!-- ============ 01 FILOSOFIA ============ -->
     <section class="philosophy section" id="filosofia" aria-labelledby="philo-title">
       <div class="wrap philosophy__grid">
         <div class="section-index reveal">
@@ -101,9 +113,9 @@
             e ghiaccio limpido tagliato a mano, ogni giorno.
           </p>
           <dl class="facts reveal">
-            <div><dt>24</dt><dd>coperti, non uno di più</dd></div>
-            <div><dt>12</dt><dd>signature in carta, ogni stagione</dd></div>
-            <div><dt>0</dt><dd>preparati industriali</dd></div>
+            <div><dt data-count="24">24</dt><dd>coperti, non uno di più</dd></div>
+            <div><dt data-count="12">12</dt><dd>signature in carta, ogni stagione</dd></div>
+            <div><dt data-count="0">0</dt><dd>preparati industriali</dd></div>
           </dl>
         </div>
 
@@ -118,7 +130,7 @@
       </div>
     </section>
 
-    <!-- ============ LA CARTA ============ -->
+    <!-- ============ 02 LA CARTA ============ -->
     <section class="menu section" id="carta" aria-labelledby="menu-title">
       <div class="wrap">
         <div class="menu__head">
@@ -139,53 +151,53 @@
         <div class="menu__body">
           <div class="menu__panels">
             <ul class="drinks" role="tabpanel" id="panel-signature" aria-labelledby="tab-signature">
-              <li class="drink" data-img="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=700&q=80">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Marea</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">14</span>
                 <span class="drink__notes">Gin al finocchietto marino, vermouth bianco, bitter al bergamotto</span>
               </li>
-              <li class="drink" data-img="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=700&q=80">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Ottone</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">15</span>
                 <span class="drink__notes">Rye whiskey, amaro alle erbe, miele di castagno, fumo di ciliegio</span>
               </li>
-              <li class="drink" data-img="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=700&q=80">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Ora blu</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">13</span>
                 <span class="drink__notes">Rum agricolo, lime, sciroppo di tè affumicato, soda al pompelmo</span>
               </li>
-              <li class="drink" data-img="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=700&q=80">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1587223962930-cb7f31384c19?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Fico d'inverno</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">14</span>
                 <span class="drink__notes">Cognac, fico nero, sherry oloroso, gocce di cacao</span>
               </li>
             </ul>
 
             <ul class="drinks" role="tabpanel" id="panel-classici" aria-labelledby="tab-classici" hidden>
-              <li class="drink" data-img="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=700&q=80">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Negroni</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">11</span>
                 <span class="drink__notes">Gin, bitter, vermouth rosso. Mescolato, mai agitato</span>
               </li>
-              <li class="drink" data-img="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=700&q=80">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Old Fashioned</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">12</span>
                 <span class="drink__notes">Bourbon, zucchero demerara, Angostura, scorza d'arancia</span>
               </li>
-              <li class="drink" data-img="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=700&q=80">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1575023782549-62ca0d244b39?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Martini</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">12</span>
                 <span class="drink__notes">Gin o vodka, vermouth secco, oliva o twist di limone</span>
               </li>
-              <li class="drink" data-img="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=700&q=80">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1587223962930-cb7f31384c19?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Daiquiri</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">11</span>
                 <span class="drink__notes">Rum bianco, lime, zucchero. Nient'altro</span>
               </li>
             </ul>
 
             <ul class="drinks" role="tabpanel" id="panel-zero" aria-labelledby="tab-zero" hidden>
-              <li class="drink" data-img="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=700&q=80">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Giardino</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">9</span>
                 <span class="drink__notes">Cetriolo, basilico, verjus, tonica artigianale</span>
               </li>
-              <li class="drink" data-img="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=700&q=80">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Agrumeto</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">9</span>
                 <span class="drink__notes">Arancia rossa, chinotto, rosmarino, soda</span>
               </li>
-              <li class="drink" data-img="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=700&q=80">
+              <li class="drink" data-img="https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Brace</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">10</span>
                 <span class="drink__notes">Tè lapsang affumicato, miele, limone, bitter analcolico</span>
               </li>
@@ -193,7 +205,8 @@
           </div>
 
           <figure class="menu__preview" aria-hidden="true">
-            <img alt="" src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=700&q=80">
+            <img alt="" src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=800&q=80">
+            <figcaption class="menu__preview-cap"><span data-preview-name>Marea</span></figcaption>
           </figure>
         </div>
 
@@ -206,7 +219,7 @@
       <div class="quote__media" data-parallax>
         <img loading="lazy"
           src="https://images.unsplash.com/photo-1525268323446-0505b6fe7778?auto=format&fit=crop&w=2000&q=75"
-          alt="" >
+          alt="">
       </div>
       <blockquote class="quote__text wrap reveal">
         <p>«Il ghiaccio è l'ingrediente che nessuno nota, <em>finché non è perfetto.</em>»</p>
@@ -214,12 +227,47 @@
       </blockquote>
     </section>
 
-    <!-- ============ IL BAR ============ -->
+    <!-- ============ 03 IL RITO ============ -->
+    <section class="ritual section" id="rito" aria-labelledby="ritual-title">
+      <div class="wrap">
+        <div class="ritual__head">
+          <div class="section-index reveal">
+            <span class="section-index__num">03</span>
+            <span class="section-index__label">Il rito</span>
+          </div>
+          <h2 class="display reveal" id="ritual-title">Tre gesti, <em>ogni volta.</em></h2>
+          <p class="lead reveal">Non abbiamo segreti, solo pazienza. Ogni drink passa dalle stesse mani e dagli stessi tre momenti.</p>
+        </div>
+
+        <ol class="ritual__steps">
+          <li class="step reveal">
+            <span class="step__num" aria-hidden="true">I</span>
+            <div class="frame"><img loading="lazy" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=80" alt="Bicchiere colmo di ghiaccio limpido con fetta di lime"></div>
+            <h3 class="step__title">Il ghiaccio</h3>
+            <p class="step__text">Blocchi limpidi congelati lentamente per quarantotto ore, poi tagliati a mano al momento. Si scioglie piano e non annacqua.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__num" aria-hidden="true">II</span>
+            <div class="frame"><img loading="lazy" src="https://images.unsplash.com/photo-1609345265499-2133bbeb6ce5?auto=format&fit=crop&w=900&q=80" alt="Jigger in ottone e strumenti da bar sul bancone"></div>
+            <h3 class="step__title">La misura</h3>
+            <p class="step__text">Ogni ingrediente pesato al grammo, ogni mescolata contata. La precisione è ciò che rende un classico, classico.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__num" aria-hidden="true">III</span>
+            <div class="frame"><img loading="lazy" src="https://images.unsplash.com/photo-1587223962930-cb7f31384c19?auto=format&fit=crop&w=900&q=80" alt="Coppa da cocktail dorata su fondo nero"></div>
+            <h3 class="step__title">Il servizio</h3>
+            <p class="step__text">Vetro raffreddato, una guarnizione sola, servito al bancone con il racconto di ciò che state per bere.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ 04 IL BAR ============ -->
     <section class="space section" id="bar" aria-labelledby="space-title">
       <div class="wrap">
         <div class="space__head">
           <div class="section-index reveal">
-            <span class="section-index__num">03</span>
+            <span class="section-index__num">04</span>
             <span class="section-index__label">Il bar</span>
           </div>
           <h2 class="display reveal" id="space-title">Luce bassa, ottone, <em>legno scuro.</em></h2>
@@ -236,82 +284,40 @@
             <figcaption><span>II.</span> La bottigliera</figcaption>
           </figure>
           <figure class="gallery__item gallery__item--c reveal">
-            <div class="frame"><img loading="lazy" src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=1200&q=80" alt="Sala del bar con luci soffuse e scaffali di bottiglie"></div>
-            <figcaption><span>III.</span> La sala</figcaption>
+            <div class="frame"><img loading="lazy" src="https://images.unsplash.com/photo-1597290282695-edc43d0e7129?auto=format&fit=crop&w=1200&q=80" alt="Retrobanco in legno scuro con bottiglie illuminate"></div>
+            <figcaption><span>III.</span> Il retrobanco</figcaption>
           </figure>
         </div>
       </div>
     </section>
 
-    <!-- ============ PRENOTA + CONTATTI ============ -->
-    <section class="visit section" id="prenota" aria-labelledby="book-title">
-      <div class="wrap visit__grid">
-        <div class="visit__form-col">
-          <div class="section-index reveal">
-            <span class="section-index__num">04</span>
-            <span class="section-index__label">Prenota</span>
-          </div>
-          <h2 class="display reveal" id="book-title">Riserviamo <em>il vostro posto.</em></h2>
-          <p class="lead reveal">Per gruppi oltre le sei persone scriveteci direttamente. Il bancone resta sempre libero per chi passa senza prenotare.</p>
+    <!-- ============ 05 DOVE SIAMO ============ -->
+    <section class="visit section" id="contatti" aria-labelledby="visit-title">
+      <div class="wrap">
+        <div class="visit__grid">
+          <div class="visit__main">
+            <div class="section-index reveal">
+              <span class="section-index__num">05</span>
+              <span class="section-index__label">Dove siamo</span>
+            </div>
+            <h2 class="display reveal" id="visit-title">Vi aspettiamo <em>al bancone.</em></h2>
+            <p class="lead reveal">Niente prenotazioni: i posti si assegnano in ordine di arrivo. Il momento più tranquillo è subito dopo l'apertura.</p>
 
-          <form class="form reveal" id="booking-form" novalidate>
-            <div class="field field--full">
-              <input id="f-name" name="nome" type="text" autocomplete="name" placeholder=" " required>
-              <label for="f-name">Nome e cognome</label>
-              <span class="field__error" aria-live="polite"></span>
+            <a class="address-link reveal" href="https://maps.google.com/?q=Via+del+Porto+12" target="_blank" rel="noopener">
+              <span class="address-link__text">Via del Porto 12</span>
+              <span class="address-link__sub">00100 Città · Indicazioni <span aria-hidden="true">↗</span></span>
+            </a>
+          </div>
+
+          <figure class="visit__figure reveal">
+            <div class="frame"><img loading="lazy" src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=1000&q=80" alt="Sala del bar con luci calde e scaffali di bottiglie"></div>
+            <div class="visit__badge">
+              <span class="status"><span class="status__dot" aria-hidden="true"></span><span data-open-status>Stasera dalle 18:30</span></span>
             </div>
-            <div class="field">
-              <input id="f-date" name="data" type="date" required>
-              <label for="f-date" class="is-static">Data</label>
-              <span class="field__error" aria-live="polite"></span>
-            </div>
-            <div class="field">
-              <select id="f-time" name="ora" required>
-                <option value="" disabled selected>—</option>
-                <option>18:30</option><option>19:30</option><option>20:30</option>
-                <option>21:30</option><option>22:30</option><option>23:30</option>
-              </select>
-              <label for="f-time" class="is-static">Orario</label>
-              <span class="field__error" aria-live="polite"></span>
-            </div>
-            <div class="field">
-              <div class="stepper" role="group" aria-label="Numero di persone">
-                <button type="button" data-step="-1" aria-label="Una persona in meno">−</button>
-                <output id="f-guests" name="persone" aria-live="polite">2</output>
-                <button type="button" data-step="1" aria-label="Una persona in più">+</button>
-              </div>
-              <span class="field__label-static">Persone</span>
-            </div>
-            <div class="field">
-              <input id="f-phone" name="telefono" type="tel" autocomplete="tel" placeholder=" " required>
-              <label for="f-phone">Telefono</label>
-              <span class="field__error" aria-live="polite"></span>
-            </div>
-            <div class="field field--full">
-              <textarea id="f-notes" name="note" rows="2" placeholder=" "></textarea>
-              <label for="f-notes">Note (allergie, occasioni speciali)</label>
-            </div>
-            <div class="form__submit field--full">
-              <button class="btn btn--solid" type="submit">Invia la richiesta</button>
-              <p class="form__hint">Vi confermeremo il tavolo entro un'ora.</p>
-            </div>
-            <p class="form__success field--full" role="status" hidden></p>
-          </form>
+          </figure>
         </div>
 
-        <aside class="visit__info" id="contatti" aria-labelledby="info-title">
-          <div class="section-index reveal">
-            <span class="section-index__num">05</span>
-            <span class="section-index__label">Contatti</span>
-          </div>
-          <h2 class="visit__info-title reveal" id="info-title">Dove trovarci</h2>
-
-          <address class="info-block reveal">
-            Via del Porto 12<br>
-            00100 Città
-            <a class="link-arrow" href="https://maps.google.com/?q=Via+del+Porto+12" target="_blank" rel="noopener">Indicazioni <span aria-hidden="true">↗</span></a>
-          </address>
-
+        <div class="visit__info">
           <div class="info-block reveal">
             <h3 class="info-block__label">Orari</h3>
             <table class="hours">
@@ -328,9 +334,14 @@
             <h3 class="info-block__label">Scriveteci</h3>
             <a class="info-link" href="tel:+390000000000">+39 000 000 0000</a>
             <a class="info-link" href="mailto:ciao@agua.bar">ciao@agua.bar</a>
-            <a class="info-link" href="https://instagram.com/" target="_blank" rel="noopener">Instagram ↗</a>
           </div>
-        </aside>
+
+          <div class="info-block reveal">
+            <h3 class="info-block__label">Seguiteci</h3>
+            <a class="info-link" href="https://instagram.com/" target="_blank" rel="noopener">Instagram ↗</a>
+            <p class="info-note">Il fuori menu della settimana lo annunciamo lì, ogni martedì.</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -338,7 +349,7 @@
   <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
     <div class="wrap site-footer__inner">
-      <p class="site-footer__mark">Agua</p>
+      <p class="site-footer__mark" aria-hidden="true">Agua</p>
       <p class="site-footer__small">© <span data-year>2026</span> Agua cocktail bar · P.IVA 00000000000</p>
       <p class="site-footer__small">Bevi responsabilmente.</p>
       <a class="site-footer__top" href="#top">Torna su ↑</a>
