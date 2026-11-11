@@ -15,12 +15,13 @@
   <script>
     document.documentElement.classList.add('js');
     try { if (!sessionStorage.getItem('agua-intro')) document.documentElement.classList.add('has-intro'); } catch (e) {}
+    setTimeout(function () { if (!window.aguaReady) document.documentElement.classList.remove('js', 'has-intro'); }, 4000);
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=5">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=8">
 </head>
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
@@ -156,7 +157,7 @@
 
         <div class="menu__body">
           <div class="menu__panels">
-            <ul class="drinks" role="tabpanel" id="panel-signature" aria-labelledby="tab-signature">
+            <ul class="drinks" role="tabpanel" tabindex="0" id="panel-signature" aria-labelledby="tab-signature">
               <li class="drink" data-img="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Marea</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">14</span>
                 <span class="drink__notes">Gin al finocchietto marino, vermouth bianco, bitter al bergamotto</span>
@@ -175,7 +176,7 @@
               </li>
             </ul>
 
-            <ul class="drinks" role="tabpanel" id="panel-classici" aria-labelledby="tab-classici" hidden>
+            <ul class="drinks" role="tabpanel" tabindex="0" id="panel-classici" aria-labelledby="tab-classici" hidden>
               <li class="drink" data-img="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Negroni</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">11</span>
                 <span class="drink__notes">Gin, bitter, vermouth rosso. Mescolato, mai agitato</span>
@@ -194,7 +195,7 @@
               </li>
             </ul>
 
-            <ul class="drinks" role="tabpanel" id="panel-zero" aria-labelledby="tab-zero" hidden>
+            <ul class="drinks" role="tabpanel" tabindex="0" id="panel-zero" aria-labelledby="tab-zero" hidden>
               <li class="drink" data-img="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=80">
                 <span class="drink__name">Giardino</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">9</span>
                 <span class="drink__notes">Cetriolo, basilico, verjus, tonica artigianale</span>
@@ -363,6 +364,6 @@
   </footer>
 
   <div class="grain" aria-hidden="true"></div>
-  <script src="assets/js/main.js?v=5" defer></script>
+  <script src="assets/js/main.js?v=8" defer></script>
 </body>
 </html>

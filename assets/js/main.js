@@ -1,5 +1,6 @@
 /* Agua — interazioni */
 (() => {
+  window.aguaReady = true;
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const root = document.documentElement;
@@ -70,6 +71,7 @@
       mobileMenu.hidden = false;
       header.classList.remove('is-hidden');
       requestAnimationFrame(() => requestAnimationFrame(() => mobileMenu.classList.add('is-open')));
+      setTimeout(() => $('a', mobileMenu).focus({ preventScroll: true }), 350);
     } else {
       mobileMenu.classList.remove('is-open');
       setTimeout(() => { if (!mobileMenu.classList.contains('is-open')) mobileMenu.hidden = true; }, 500);
