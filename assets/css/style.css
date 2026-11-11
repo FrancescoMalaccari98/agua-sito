@@ -23,7 +23,7 @@
   /* Misure */
   --wrap: 1320px;
   --gutter: clamp(20px, 5vw, 64px);
-  --section-y: clamp(96px, 14vw, 200px);
+  --section-y: clamp(80px, 9vw, 140px);
 
   /* Movimento */
   --ease: cubic-bezier(.22, .61, .36, 1);
@@ -83,7 +83,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 .section-index {
   display: flex; align-items: center; gap: 14px;
-  margin-bottom: clamp(28px, 4vw, 48px);
+  margin-bottom: clamp(24px, 3vw, 36px);
   font-size: 11px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase;
   color: var(--brass);
 }
@@ -178,9 +178,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .mobile-menu {
   position: fixed; inset: 0; z-index: 45; background: var(--ink);
   padding: 120px var(--gutter) 40px; display: flex; flex-direction: column; justify-content: space-between;
-  opacity: 0; transition: opacity .5s var(--ease);
+  opacity: 0; pointer-events: none; transition: opacity .5s var(--ease);
 }
-.mobile-menu.is-open { opacity: 1; }
+/* "hidden" deve vincere sul display:flex, altrimenti il velo trasparente blocca i clic sulla pagina */
+.mobile-menu[hidden] { display: none; }
+.mobile-menu.is-open { opacity: 1; pointer-events: auto; }
 .mobile-menu__list li { overflow: hidden; border-bottom: 1px solid var(--line); }
 .mobile-menu__list a {
   display: flex; align-items: baseline; gap: 18px; padding: 18px 0;
@@ -260,11 +262,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 .philosophy .section-index { grid-column: 1 / -1; }
 .philosophy__text { grid-column: 1 / span 7; }
-.philosophy__text .display { max-width: 13ch; }
+.philosophy__text .display { max-width: 14ch; }
 .philosophy__text .lead { margin-top: clamp(28px, 3vw, 40px); }
-.philosophy__figure { grid-column: 9 / -1; margin-top: clamp(40px, 10vw, 140px); }
+.philosophy__figure { grid-column: 9 / -1; margin-top: clamp(24px, 4vw, 56px); }
 
-.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(48px, 6vw, 80px); border-top: 1px solid var(--line); }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(40px, 4vw, 56px); border-top: 1px solid var(--line); }
 .facts div { padding: 24px 20px 0 0; }
 .facts div + div { padding-left: 20px; border-left: 1px solid var(--line); }
 .facts dt { font-family: var(--serif); font-size: clamp(44px, 4.4vw, 64px); font-weight: 300; line-height: 1; color: var(--brass); }
@@ -280,7 +282,7 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 .menu { background: var(--ink-2); border-block: 1px solid var(--line); }
 .menu__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px 48px; }
 .menu__head .section-index { grid-column: 1 / -1; margin-bottom: 0; }
-.menu__head .display { max-width: 12ch; }
+.menu__head .display { max-width: 16ch; }
 
 .tabs { position: relative; display: flex; gap: 4px; border-bottom: 1px solid var(--line); }
 .tabs button {
@@ -292,15 +294,15 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 .tabs button[aria-selected="true"] { color: var(--ivory); }
 .tabs__ink { position: absolute; bottom: 0; left: 0; height: 1px; background: var(--brass); transition: transform .6s var(--ease-out), width .6s var(--ease-out); }
 
-.menu__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .62fr); gap: clamp(40px, 6vw, 96px); margin-top: clamp(48px, 6vw, 88px); align-items: start; }
+.menu__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .62fr); gap: clamp(40px, 6vw, 96px); margin-top: clamp(36px, 4vw, 56px); align-items: start; }
 .drinks { animation: panelIn .8s var(--ease-out); }
 @keyframes panelIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 .drink {
   display: grid; grid-template-columns: auto minmax(24px, 1fr) auto; align-items: baseline; column-gap: 16px;
-  padding: 26px 0; border-bottom: 1px solid var(--line); cursor: default; position: relative;
+  padding: 20px 0; border-bottom: 1px solid var(--line); cursor: default; position: relative;
 }
 .drink:first-child { border-top: 1px solid var(--line); }
-.drink__name { font-family: var(--serif); font-size: clamp(28px, 3vw, 42px); font-weight: 300; line-height: 1.1; transition: color .5s var(--ease), transform .6s var(--ease-out); }
+.drink__name { font-family: var(--serif); font-size: clamp(26px, 2.6vw, 38px); font-weight: 300; line-height: 1.1; transition: color .5s var(--ease), transform .6s var(--ease-out); }
 .drink__leader { height: 1px; background-image: linear-gradient(90deg, var(--line-brass) 40%, transparent 0); background-size: 6px 1px; align-self: center; transform: translateY(6px); opacity: .7; }
 .drink__price { font-family: var(--serif); font-size: 22px; color: var(--brass); }
 .drink__price::before { content: "€ "; font-size: .7em; color: var(--mute); }
@@ -308,60 +310,55 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 .drink:hover .drink__name, .drink.is-active .drink__name { color: var(--brass); transform: translateX(8px); }
 .drink:hover .drink__notes, .drink.is-active .drink__notes { color: var(--ivory); }
 
-.menu__preview { position: sticky; top: 120px; aspect-ratio: 4 / 5; overflow: hidden; background: var(--ink-3); }
+.menu__preview { position: sticky; top: 120px; aspect-ratio: 5 / 6; overflow: hidden; background: var(--ink-3); }
 .menu__preview img { width: 100%; height: 100%; object-fit: cover; transition: opacity .6s var(--ease), transform 1.4s var(--ease-out); filter: saturate(.9); }
 .menu__preview.is-swapping img { opacity: 0; transform: scale(1.06); }
 .menu__preview::after { content: ""; position: absolute; inset: 14px; border: 1px solid var(--line-brass); pointer-events: none; }
-.menu__foot { margin-top: 40px; font-size: 13px; color: var(--mute); max-width: 60ch; }
+.menu__foot { margin-top: 28px; font-size: 13px; color: var(--mute); max-width: 60ch; }
 
 /* ---------- Citazione ---------- */
-.quote { position: relative; min-height: clamp(460px, 80vh, 760px); display: flex; align-items: center; overflow: hidden; isolation: isolate; }
+.quote { position: relative; min-height: clamp(360px, 58vh, 560px); display: flex; align-items: center; overflow: hidden; isolation: isolate; }
 .quote__media { position: absolute; inset: -12% 0; z-index: -1; will-change: transform; }
 .quote__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.45) sepia(.25) brightness(.55); }
 .quote__media::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(14,21,20,.55), rgba(14,21,20,.85)); }
-.quote__text p { font-family: var(--serif); font-weight: 300; font-size: clamp(34px, 5vw, 76px); line-height: 1.08; max-width: 18ch; letter-spacing: -.01em; }
+.quote__text p { font-family: var(--serif); font-weight: 300; font-size: clamp(32px, 4.4vw, 64px); line-height: 1.08; max-width: 22ch; letter-spacing: -.01em; }
 .quote__text footer { margin-top: 32px; font-size: 11px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--brass); }
 
 /* ---------- Il bar ---------- */
-.space__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .7fr); gap: 24px 64px; align-items: end; }
+.space__head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: 24px 64px; align-items: end; }
 .space__head .section-index { grid-column: 1 / -1; margin-bottom: 0; }
-.space__head .display { max-width: 12ch; }
+.space__head .display { max-width: 18ch; }
 
-.gallery { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; margin-top: clamp(56px, 7vw, 104px); }
-.gallery__item--a { grid-column: 1 / span 7; }
-.gallery__item--a .frame { aspect-ratio: 4 / 3; }
-.gallery__item--b { grid-column: 9 / -1; margin-top: clamp(80px, 14vw, 220px); }
-.gallery__item--b .frame { aspect-ratio: 3 / 4; }
-.gallery__item--c { grid-column: 3 / span 6; margin-top: clamp(-120px, -6vw, -40px); }
-.gallery__item--c .frame { aspect-ratio: 16 / 10; }
+.gallery { display: grid; grid-template-columns: 5fr 3fr 4fr; gap: clamp(16px, 2vw, 24px); margin-top: clamp(40px, 5vw, 72px); }
+.gallery .frame { height: clamp(260px, 30vw, 440px); }
+.gallery__item--b { margin-top: clamp(24px, 3vw, 48px); }
 .gallery figcaption span { font-style: normal; color: var(--brass); margin-right: 6px; }
 .gallery__item:hover img, .philosophy__figure:hover img { transform: scale(1.04); filter: saturate(1); }
 
 /* ---------- Il rito ---------- */
-.ritual__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .7fr); gap: 24px 64px; align-items: end; }
+.ritual__head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: 24px 64px; align-items: end; }
 .ritual__head .section-index { grid-column: 1 / -1; margin-bottom: 0; }
-.ritual__head .display { max-width: 11ch; }
-.ritual__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); margin-top: clamp(56px, 7vw, 104px); counter-reset: step; }
+.ritual__head .display { max-width: 14ch; }
+.ritual__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); margin-top: clamp(56px, 6vw, 88px); }
 .step { position: relative; }
-.step:nth-child(2) { margin-top: clamp(40px, 7vw, 120px); }
-.step:nth-child(3) { margin-top: clamp(80px, 14vw, 240px); }
-.step .frame { aspect-ratio: 3 / 4; }
+.step:nth-child(2) { margin-top: clamp(20px, 3vw, 48px); }
+.step .frame { aspect-ratio: 4 / 5; }
 .step__num {
   position: absolute; z-index: 3; top: -.48em; right: 18px;
   font-family: var(--serif); font-style: italic; font-weight: 300; font-size: clamp(72px, 8vw, 128px); line-height: 1;
   color: transparent; -webkit-text-stroke: 1px var(--brass); pointer-events: none;
 }
-.step__title { font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 2.4vw, 34px); line-height: 1.1; margin-top: 28px; }
+.step__title { font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 2.4vw, 34px); line-height: 1.1; margin-top: 22px; }
 .step__text { margin-top: 12px; font-size: 15px; color: var(--stone); max-width: 34ch; }
 .step:hover img { transform: scale(1.04); filter: saturate(1); }
 
 /* ---------- Dove siamo ---------- */
 .visit { background: var(--ink-2); border-top: 1px solid var(--line); overflow: hidden; }
-.visit__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(48px, 8vw, 128px); align-items: end; }
-.visit__main .display { max-width: 10ch; }
+.visit__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(48px, 8vw, 128px); align-items: center; }
+.visit__main .display { max-width: 12ch; }
 .visit__main .lead { margin-top: 28px; }
 
-.address-link { display: inline-block; margin-top: clamp(48px, 6vw, 88px); position: relative; padding-bottom: 18px; }
+.address-link { display: inline-block; margin-top: clamp(36px, 4vw, 56px); position: relative; padding-bottom: 18px; }
 .address-link__text {
   display: block; font-family: var(--serif); font-weight: 300; font-style: italic;
   font-size: clamp(40px, 5.4vw, 80px); line-height: 1; color: var(--brass); letter-spacing: -.01em;
@@ -374,7 +371,7 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 .address-link:hover .address-link__sub { color: var(--ivory); }
 
 .visit__figure { position: relative; }
-.visit__figure .frame { aspect-ratio: 4 / 5; }
+.visit__figure .frame { aspect-ratio: 1 / 1; }
 .visit__figure .frame::after { content: ""; position: absolute; inset: 14px; border: 1px solid var(--line-brass); pointer-events: none; z-index: 1; }
 .visit__badge {
   position: absolute; left: clamp(-40px, -3vw, -16px); bottom: 40px; z-index: 3;
@@ -382,7 +379,7 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 }
 .visit__badge .status { color: var(--ivory); }
 
-.visit__info { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 clamp(32px, 5vw, 80px); margin-top: clamp(72px, 9vw, 140px); }
+.visit__info { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 clamp(32px, 5vw, 80px); margin-top: clamp(48px, 6vw, 88px); }
 .info-block { padding-top: 28px; border-top: 1px solid var(--line); font-size: 17px; line-height: 1.6; }
 .info-block__label { font-size: 11px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--brass); margin-bottom: 18px; }
 .hours { width: 100%; border-collapse: collapse; font-size: 15px; }
@@ -395,9 +392,9 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 .info-note { margin-top: 10px; font-size: 14px; color: var(--mute); max-width: 30ch; }
 
 /* ---------- Footer ---------- */
-.site-footer { border-top: 1px solid var(--line); padding-block: 56px 40px; }
+.site-footer { border-top: 1px solid var(--line); padding-block: 48px 36px; }
 .site-footer__inner { display: grid; grid-template-columns: 1fr auto auto auto; gap: 16px 48px; align-items: end; }
-.site-footer__mark { font-family: var(--serif); font-size: clamp(64px, 12vw, 180px); font-weight: 300; line-height: .8; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); -webkit-text-stroke: 1px var(--line-brass); }
+.site-footer__mark { font-family: var(--serif); font-size: clamp(56px, 9vw, 140px); font-weight: 300; line-height: .8; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); -webkit-text-stroke: 1px var(--line-brass); }
 .site-footer__small { font-size: 12px; color: var(--mute); }
 .site-footer__top { font-size: 11px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--brass); }
 
@@ -469,16 +466,18 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 }
 
 @media (max-width: 800px) {
-  /* il rito diventa un nastro orizzontale da scorrere */
-  .ritual__steps {
+  /* rito e galleria diventano nastri orizzontali da scorrere */
+  .ritual__steps, .gallery {
     grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78%;
     overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
     margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);
     padding-top: 40px;
   }
-  .ritual__steps::-webkit-scrollbar { display: none; }
-  .step { scroll-snap-align: start; }
-  .step:nth-child(2), .step:nth-child(3) { margin-top: 0; }
+  .ritual__steps::-webkit-scrollbar, .gallery::-webkit-scrollbar { display: none; }
+  .gallery { grid-auto-columns: 82%; padding-top: 0; gap: 16px; }
+  .gallery .frame { height: auto; aspect-ratio: 4 / 5; }
+  .step, .gallery__item { scroll-snap-align: start; }
+  .step:nth-child(2), .gallery__item--b { margin-top: 0; }
 }
 
 @media (max-width: 640px) {
@@ -491,19 +490,19 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
   .hero__title .line:nth-child(2) { padding-left: 28px; }
   .hero__actions .btn { width: 100%; }
   .philosophy__figure { grid-column: 1 / -1; }
-  .facts { grid-template-columns: 1fr; }
-  .facts div, .facts div + div { padding: 20px 0; border-left: 0; border-bottom: 1px solid var(--line); display: flex; align-items: baseline; gap: 20px; }
-  .facts dd { margin-top: 0; }
+  .facts div { padding-right: 12px; }
+  .facts div + div { padding-left: 12px; }
+  .facts dt { font-size: 40px; }
+  .facts dd { font-size: 12px; }
   .tabs { overflow-x: auto; scrollbar-width: none; }
   .tabs button { padding: 14px 12px; white-space: nowrap; }
   .drink { padding: 22px 0; }
-  .gallery { grid-template-columns: 1fr; gap: 40px; }
-  .gallery__item--a, .gallery__item--b, .gallery__item--c { grid-column: 1; margin-top: 0; }
-  .gallery__item--b { width: 72%; margin-left: auto; }
   .visit__figure { width: 88%; }
+  .philosophy__figure .frame { aspect-ratio: 4 / 3; }
   .visit__badge { left: -16px; bottom: 24px; padding: 12px 16px; }
-  .visit__info { grid-template-columns: 1fr; }
-  .visit__info .info-block { margin-bottom: 32px; }
+  .visit__info { grid-template-columns: 1fr 1fr; gap: 0 24px; }
+  .visit__info .info-block { margin-bottom: 28px; font-size: 15px; }
+  .visit__info .info-block:first-child { margin-bottom: 28px; }
   .site-footer__inner { grid-template-columns: 1fr; }
 }
 
