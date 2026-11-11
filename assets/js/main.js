@@ -209,11 +209,54 @@
     const label = d === 1 ? 'Domani' : DAYS[(day + d) % 7].replace(/^./, (c) => c.toUpperCase());
     text = `${label} dalle ${fmt(HOURS[(day + d) % 7][0])}`;
   }
+  /* ---------- Conto alla rovescia all'inaugurazione ---------- */
+  const countdown = $('[data-countdown]');
+  const opening = countdown ? new Date(countdown.dataset.countdown) : null;
+  const beforeOpening = () => !!opening && Date.now() < opening.getTime();
+
+  // prima dell'inaugurazione nessuno stato deve dire "aperto"
+  if (beforeOpening()) {
+    const openingDay = opening.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', timeZone: 'Europe/Rome' });
+    text = `Inaugurazione ${openingDay}`;
+    open = false;
+  }
   $$('[data-open-status]').forEach((el) => {
     el.textContent = text;
     const status = el.closest('.status');
     if (status) status.classList.toggle('is-closed', !open);
   });
+
+  if (countdown) {
+    const heroStatus = $('.hero__meta .status');
+    const nums = Object.fromEntries($$('[data-unit]', countdown).map((el) => [el.dataset.unit, el]));
+    const pad = (n) => String(n).padStart(2, '0');
+    const set = (key, value) => {
+      const el = nums[key];
+      if (el.textContent === value) return;
+      el.textContent = value;
+      if (!reduceMotion) {
+        el.classList.remove('is-tick');
+        void el.offsetWidth; // riavvia l'animazione
+        el.classList.add('is-tick');
+      }
+    };
+    const finish = () => {
+      countdown.hidden = true;
+      heroStatus.hidden = false;
+    };
+    const render = () => {
+      const diff = opening.getTime() - Date.now();
+      if (diff <= 0) { finish(); return; }
+      const sec = Math.floor(diff / 1000);
+      set('d', pad(Math.floor(sec / 86400)));
+      set('h', pad(Math.floor((sec % 86400) / 3600)));
+      set('m', pad(Math.floor((sec % 3600) / 60)));
+      set('s', pad(sec % 60));
+      // riallinea al secondo esatto successivo
+      setTimeout(render, 1000 - (Date.now() % 1000) + 5);
+    };
+    if (beforeOpening()) render(); else finish();
+  }
 
   /* ---------- Anno nel footer ---------- */
   $('[data-year]').textContent = now.getFullYear();

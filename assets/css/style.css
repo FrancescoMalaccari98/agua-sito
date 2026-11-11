@@ -234,6 +234,28 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   padding-block: 24px; border-top: 1px solid var(--line);
 }
 .status { display: flex; align-items: center; gap: 12px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--stone); }
+.status[hidden], .countdown[hidden] { display: none; }
+
+/* ---------- Conto alla rovescia ---------- */
+.countdown { display: flex; align-items: center; gap: clamp(20px, 3vw, 44px); }
+.countdown__label {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--stone);
+}
+.countdown__label time { color: var(--ivory); }
+.countdown__units { display: flex; align-items: flex-start; gap: clamp(10px, 1.4vw, 18px); }
+.countdown__unit { display: flex; flex-direction: column; align-items: center; min-width: 2.2em; }
+.countdown__num {
+  display: block; overflow: hidden;
+  font-family: var(--serif); font-weight: 300; font-size: clamp(30px, 2.8vw, 42px); line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums; color: var(--ivory);
+}
+.countdown__num.is-tick { animation: tick .5s var(--ease-out); }
+/* scatto discreto: il numero scende appena e non sparisce mai del tutto */
+@keyframes tick { from { opacity: .45; transform: translateY(-18%); } to { opacity: 1; transform: none; } }
+.countdown__unit:last-child .countdown__num { color: var(--brass); }
+.countdown__cap { margin-top: 8px; font-size: 10px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--mute); }
+.countdown__sep { width: 1px; height: clamp(26px, 2.4vw, 36px); background: var(--line-brass); margin-top: 4px; }
 .status__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brass); position: relative; }
 .status__dot::after {
   content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid var(--brass);
@@ -492,6 +514,11 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
       linear-gradient(0deg, var(--ink) 4%, rgba(14,21,20,.55) 55%, rgba(14,21,20,.35) 100%);
   }
   .hero__title .line:nth-child(2) { padding-left: 28px; }
+  .countdown { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .countdown__label { font-size: 11px; }
+  .countdown__units { gap: 12px; }
+  .countdown__num { font-size: 32px; }
+  .hero__meta { padding-block: 18px 22px; }
   .hero__actions .btn { width: 100%; }
   .philosophy__figure { grid-column: 1 / -1; }
   .facts div { padding-right: 12px; }
@@ -514,11 +541,15 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 
 /* telefoni in orizzontale e schermi molto bassi */
 @media (max-height: 500px) and (orientation: landscape) {
-  .hero { padding-top: 72px; }
+  .hero { padding-top: 64px; }
   .hero__title { font-size: clamp(36px, 13vh, 64px); }
-  .hero__eyebrow { margin-bottom: 10px; }
-  .hero__actions { margin-top: 16px; }
-  .hero__meta { display: none; }
+  .hero__eyebrow { display: none; }
+  .hero__content { padding-bottom: 18px; }
+  .hero__actions { margin-top: 12px; }
+  .hero__meta { padding-block: 12px; }
+  .countdown__label, .scroll-cue, .hero__address { display: none; }
+  .countdown__num { font-size: 24px; }
+  .countdown__cap { margin-top: 4px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
