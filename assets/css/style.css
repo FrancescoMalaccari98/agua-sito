@@ -210,7 +210,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   animation: heroZoom 2.8s var(--ease-out) forwards;
 }
 /* la tela segue la foto: stesso zoom e stesso filtro, così il versaggio resta allineato */
-.hero__pour { position: absolute; inset: 0; display: block; pointer-events: none; }
+.hero__pour { position: absolute; inset: 0; display: block; pointer-events: none; opacity: 0; }
+.hero__pour.is-live { opacity: 1; }
 .hero__media::after {
   content: ""; position: absolute; inset: 0;
   background:
