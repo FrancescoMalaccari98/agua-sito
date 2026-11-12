@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=17">
+  <link rel="stylesheet" href="assets/css/style.css?v=18">
 </head>
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
@@ -74,14 +74,15 @@
     <!-- ============ HERO ============ -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__media">
-        <img
-          src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1800&q=80"
-          srcset="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=75 800w,
-                  https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1400&q=80 1400w,
-                  https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=2200&q=80 2200w"
-          sizes="100vw" crossorigin="anonymous" alt="Un bartender versa un cocktail ambrato su un grande cubo di ghiaccio" fetchpriority="high">
-        <!-- Versata viva: anima i pixel di questa foto (vedi main.js) -->
-        <canvas class="hero__pour" aria-hidden="true"></canvas>
+        <!-- Fotogramma finale del video: è la copertina e ciò che resta senza animazioni -->
+        <img class="hero__still"
+          src="assets/img/hero-still-1280.jpg"
+          srcset="assets/img/hero-still-720.jpg 720w, assets/img/hero-still-1280.jpg 1280w"
+          sizes="(max-width: 640px) 100vw, 68vw" width="1280" height="960"
+          alt="Un old fashioned ambrato con ghiaccio e uno spicchio di pompelmo in un bicchiere di cristallo" fetchpriority="high">
+        <!-- Video (Pexels 5230368, licenza Pexels): il file lo sceglie main.js in base allo schermo -->
+        <video class="hero__video" muted playsinline preload="none" aria-hidden="true" tabindex="-1"
+          data-src="assets/video/aqua-pour-1280.mp4" data-src-small="assets/video/aqua-pour-720.mp4"></video>
       </div>
 
       <div class="hero__content wrap">
@@ -382,6 +383,6 @@
   </footer>
 
   <div class="grain" aria-hidden="true"></div>
-  <script src="assets/js/main.js?v=17" defer></script>
+  <script src="assets/js/main.js?v=18" defer></script>
 </body>
 </html>
