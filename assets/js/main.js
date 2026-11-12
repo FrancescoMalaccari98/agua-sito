@@ -51,7 +51,10 @@
 
     video.muted = true;
     video.defaultMuted = true;
-    video.src = video.dataset[small ? 'srcSmall' : 'src'];
+    // HEVC: stessa qualità con circa il 30% di peso in meno (Safari, Chrome su Mac, iPhone);
+    // altrimenti H.264, che va ovunque
+    const hevc = video.canPlayType('video/mp4; codecs="hvc1.1.6.L123.B0"') !== '';
+    video.src = `${video.dataset[small ? 'srcSmall' : 'src']}${hevc ? '.hevc' : ''}.mp4`;
     video.preload = 'auto';
 
     const play = () => {
@@ -70,7 +73,11 @@
         play();
       }, PAUSE);
     });
-    video.addEventListener('error', () => video.remove());
+    video.addEventListener('error', () => {
+      // se l'HEVC dichiarato non si decodifica, si riprova una volta con H.264
+      if (video.src.includes('.hevc.mp4')) { video.src = video.src.replace('.hevc.mp4', '.mp4'); play(); }
+      else video.remove();
+    });
 
     new IntersectionObserver(([en]) => {
       inView = en.isIntersecting;

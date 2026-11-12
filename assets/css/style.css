@@ -208,7 +208,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .hero__still, .hero__video {
   position: absolute; top: 0; right: 0; width: 68%; height: 100%;
   object-fit: cover; object-position: 50% 50%;
-  filter: saturate(.92) brightness(.9);
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 32%);
           mask-image: linear-gradient(90deg, transparent 0%, #000 32%);
   transform: scale(1.08); transform-origin: 50% 60%;
@@ -223,7 +222,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     linear-gradient(90deg, rgba(14,21,20,.9) 0%, rgba(14,21,20,.5) 40%, rgba(14,21,20,0) 68%),
     linear-gradient(0deg, var(--ink) 0%, rgba(14,21,20,0) 38%);
 }
-@keyframes heroZoom { to { transform: scale(1.02); } }
+@keyframes heroZoom { to { transform: none; } }
 
 .hero__content { padding-bottom: clamp(28px, 5vh, 72px); }
 .hero__eyebrow { margin-bottom: clamp(16px, 3vh, 32px); }
