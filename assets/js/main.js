@@ -81,6 +81,24 @@
     return { start() { started = true; play(); } };
   })();
 
+  /* ---------- Link interni: scorrono alla sezione senza scrivere #… nell'indirizzo ----------
+     Così ricaricando o riaprendo il sito si riparte sempre dall'inizio. */
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const id = a.getAttribute('href').slice(1);
+    const target = id === 'top' || !id ? null : document.getElementById(id);
+    if (id && id !== 'top' && !target) return;
+    e.preventDefault();
+    const behavior = reduceMotion ? 'auto' : 'smooth';
+    if (!target) { window.scrollTo({ top: 0, behavior }); return; }
+    target.scrollIntoView({ behavior, block: 'start' });
+    // porta anche il focus (tastiera e lettori di schermo) senza un secondo salto
+    if (!target.matches('a, button, input, select, textarea, [tabindex]')) target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+  });
+
   /* ---------- Header: sfondo e comparsa allo scroll ---------- */
   const header = $('.site-header');
   let lastY = window.scrollY;
