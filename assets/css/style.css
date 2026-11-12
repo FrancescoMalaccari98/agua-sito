@@ -204,11 +204,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   padding-top: clamp(88px, 14vh, 120px); overflow: hidden;
 }
 .hero__media { position: absolute; inset: 0; z-index: -1; }
-.hero__media img {
+.hero__media img, .hero__pour {
   width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%;
   transform: scale(1.12); filter: saturate(.85) brightness(.82);
   animation: heroZoom 2.8s var(--ease-out) forwards;
 }
+/* la tela segue la foto: stesso zoom e stesso filtro, così il versaggio resta allineato */
+.hero__pour { position: absolute; inset: 0; display: block; pointer-events: none; }
 .hero__media::after {
   content: ""; position: absolute; inset: 0;
   background:
