@@ -553,13 +553,15 @@ img[data-foto]:not([src]) { visibility: hidden; }
   .visit__info { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 0 20px; margin-top: 36px; }
   .visit__info .info-block:first-child { grid-row: span 2; }
   .visit__info .info-block:nth-child(3) { margin-top: 18px; }
-  .visit__info .info-block { padding-top: 16px; font-size: clamp(12px, 3.5vw, 14px); line-height: 1.5; }
-  .visit__info .info-block__label { font-size: 9.5px; letter-spacing: .2em; margin-bottom: 10px; }
+  .visit__info .info-block { padding-top: 16px; font-size: clamp(14px, 4.1vw, 16px); line-height: 1.5; }
+  .visit__info .info-block__label { font-size: 10.5px; letter-spacing: .22em; margin-bottom: 12px; }
   .visit__info .hours { font-size: inherit; }
   .visit__info .hours tr { display: block; padding-block: 3px; }
   .visit__info .hours th, .visit__info .hours td { display: block; padding: 0; text-align: left; }
+  /* il lunedì sta su una riga sola: "Lunedì  Chiuso" */
+  .visit__info .hours tr[data-days="1"] { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; }
   .visit__info .hours tr.is-today th::before { margin-right: 6px; }
-  .visit__info .info-link { white-space: nowrap; padding-block: 2px; }
+  .visit__info .info-link { white-space: nowrap; padding-block: 3px; }
   .site-footer { padding-block: 18px; }
   .site-footer__inner { gap: 8px; flex-wrap: wrap; }
   .site-footer__mark svg { height: clamp(12px, 3.6vw, 14px); stroke-width: 8; }
