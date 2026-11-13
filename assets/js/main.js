@@ -39,14 +39,23 @@
   const heroVideo = (() => {
     const video = $('.hero__video');
     if (!video) return null;
+    const media = $('.hero__media');
+    // senza video la copertina mostra il drink finito invece del bicchiere vuoto
+    const stillFull = () => {
+      $$('picture source, picture img', media).forEach((el) => {
+        const attr = el.tagName === 'IMG' ? 'src' : 'srcset';
+        el.setAttribute(attr, el.getAttribute(attr).replace(/\.jpg$/, '-fine.jpg'));
+      });
+    };
     const conn = navigator.connection;
     if (reduceMotion || (conn && conn.saveData) || !video.canPlayType('video/mp4')) {
       video.remove();
+      stillFull();
       return null;
     }
     const small = window.matchMedia('(max-width: 640px)').matches;
     const FADE = 0.9;   // secondi di dissolvenza, come la transizione CSS
-    const PAUSE = 2200; // ms sulla copertina tra un giro e l'altro
+    const PAUSE = 1400; // ms sulla copertina tra un giro e l'altro
     let started = false, inView = true, restartTimer = 0;
 
     video.muted = true;
@@ -60,11 +69,17 @@
     const play = () => {
       if (!started || !inView || document.hidden || restartTimer) return;
       const p = video.play();
-      if (p) p.catch(() => {}); // autoplay bloccato: resta la copertina
+      if (p) p.catch(() => {}); // autoplay bloccato (es. risparmio energetico su iPhone): resta la copertina
     };
-    video.addEventListener('playing', () => video.classList.add('is-playing'));
+    // su iPhone con risparmio energetico l'avvio automatico è bloccato: parte al primo tocco
+    const onGesture = () => { if (video.paused && !video.ended) play(); };
+    ['touchend', 'click'].forEach((ev) => document.addEventListener(ev, onGesture, { passive: true }));
+    video.addEventListener('playing', () => {
+      media.classList.add('is-playing');
+      ['touchend', 'click'].forEach((ev) => document.removeEventListener(ev, onGesture));
+    });
     video.addEventListener('timeupdate', () => {
-      if (video.duration && video.currentTime > video.duration - FADE - 0.3) video.classList.remove('is-playing');
+      if (video.duration && video.currentTime > video.duration - FADE - 0.3) media.classList.remove('is-playing');
     });
     video.addEventListener('ended', () => {
       restartTimer = setTimeout(() => {
@@ -76,7 +91,7 @@
     video.addEventListener('error', () => {
       // se l'HEVC dichiarato non si decodifica, si riprova una volta con H.264
       if (video.src.includes('.hevc.mp4')) { video.src = video.src.replace('.hevc.mp4', '.mp4'); play(); }
-      else video.remove();
+      else { video.remove(); media.classList.remove('is-playing'); stillFull(); }
     });
 
     new IntersectionObserver(([en]) => {

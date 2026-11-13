@@ -211,10 +211,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   transform: scale(1.08); transform-origin: 50% 60%;
   animation: heroZoom 2.8s var(--ease-out) forwards;
 }
-.hero__video { opacity: 0; transition: opacity .9s ease; }
-.hero__video.is-playing { opacity: 1; }
+.hero__video { z-index: 1; }
+.hero__still { z-index: 2; transition: opacity .9s ease; }
+.hero__media.is-playing .hero__still { opacity: 0; }
 .hero__media::after {
-  content: ""; position: absolute; inset: 0;
+  content: ""; position: absolute; inset: 0; z-index: 3;
   background:
     linear-gradient(180deg, rgba(14,21,20,.75) 0%, rgba(14,21,20,0) 22%),
     linear-gradient(90deg, rgba(14,21,20,.9) 0%, rgba(14,21,20,.5) 40%, rgba(14,21,20,0) 68%),
@@ -429,12 +430,12 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
   transition: transform 1.1s cubic-bezier(.76, 0, .24, 1);
 }
-.intro__logo { width: min(72vw, 540px); height: auto; fill: var(--ivory); overflow: visible; }
+.intro__logo { width: clamp(150px, 34vw, 230px); height: auto; fill: var(--ivory); overflow: visible; }
 .intro__word { transform: translateX(126.5px); animation: introWord 1.05s 1s var(--ease-out) forwards; }
 .intro__q { transform-box: fill-box; transform-origin: center; opacity: 0; transform: scale(.8); animation: introQ 1s .1s var(--ease-out) forwards; }
 .intro__a { opacity: 0; transform: translateX(70px); animation: introSide 1s 1.08s var(--ease-out) forwards; }
 .intro__ua { opacity: 0; transform: translateX(-70px); animation: introSide 1s 1.08s var(--ease-out) forwards; }
-.intro__line { width: 120px; height: 1px; background: var(--brass); transform: scaleX(0); animation: introLine 1.2s 1.5s var(--ease-out) forwards; }
+.intro__line { width: 64px; height: 1px; background: var(--brass); transform: scaleX(0); animation: introLine 1.2s 1.5s var(--ease-out) forwards; }
 @keyframes introQ { to { opacity: 1; transform: none; } }
 @keyframes introWord { to { transform: none; } }
 @keyframes introSide { to { opacity: 1; transform: none; } }
