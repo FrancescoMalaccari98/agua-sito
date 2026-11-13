@@ -282,8 +282,8 @@
      Before the opening night it says "Inaugurazione …"; afterwards it is computed from the
      hours below and refreshed every minute (and when the countdown ends). */
   // day 0=Sun..6=Sat → [opening, closing] in minutes; above 1440 = after midnight
-  // Tue–Fri 17:00–22:00 · Sat and Sun 22:00–02:00 · Monday closed
-  const HOURS = { 0: [1320, 1560], 1: null, 2: [1020, 1320], 3: [1020, 1320], 4: [1020, 1320], 5: [1020, 1320], 6: [1320, 1560] };
+  // Tue–Fri 17:00–22:00 · Sat and Sun 10:00–02:00 · Monday closed
+  const HOURS = { 0: [600, 1560], 1: null, 2: [1020, 1320], 3: [1020, 1320], 4: [1020, 1320], 5: [1020, 1320], 6: [600, 1560] };
   const DAYS = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
   const romeClock = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Europe/Rome', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
@@ -309,7 +309,8 @@
     const yesterday = HOURS[(day + 6) % 7];
     if (yesterday && yesterday[1] > 1440 && mins < yesterday[1] - 1440) return { open: true, text: `Aperto ora · fino alle ${fmt(yesterday[1])}` };
     if (today && mins >= today[0] && mins < today[1]) return { open: true, text: `Aperto ora · fino alle ${fmt(today[1])}` };
-    if (today && mins < today[0]) return { open: false, text: `Stasera dalle ${fmt(today[0])}` };
+    // "Stasera" only for evening openings; weekend mornings (10:00) say "Oggi"
+    if (today && mins < today[0]) return { open: false, text: `${today[0] >= 1020 ? 'Stasera' : 'Oggi'} dalle ${fmt(today[0])}` };
     let d = 1;
     while (!HOURS[(day + d) % 7]) d++;
     const label = d === 1 ? 'Domani' : DAYS[(day + d) % 7].replace(/^./, (c) => c.toUpperCase());
