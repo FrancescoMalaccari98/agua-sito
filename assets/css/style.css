@@ -83,7 +83,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 .section-index {
   display: flex; align-items: center; gap: 14px;
-  margin-bottom: clamp(24px, 3vw, 36px);
+  margin-bottom: clamp(16px, 2vw, 26px);
   font-size: 11px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase;
   color: var(--brass);
 }
@@ -195,7 +195,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .mobile-menu.is-open li:nth-child(5) a { transition-delay: .2s; }
 .mobile-menu__bottom { display: grid; gap: 18px; justify-items: start; }
 .mobile-menu__q { width: 40px; height: auto; aspect-ratio: 488 / 476; fill: var(--brass); }
-.mobile-menu__foot { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--stone); }
+.mobile-menu__foot { font-size: 12px; letter-spacing: .14em; line-height: 1.8; text-transform: uppercase; color: var(--stone); }
+.mobile-menu__foot > span { display: block; }
+.mobile-menu__foot > span[hidden] { display: none; }
 
 /* ---------- Hero ---------- */
 .hero {
@@ -293,7 +295,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .philosophy .section-index { grid-column: 1 / -1; }
 .philosophy__text { grid-column: 1 / span 7; }
 .philosophy__text .display { max-width: 14ch; }
-.philosophy__text .lead { margin-top: clamp(28px, 3vw, 40px); }
+.philosophy__text .lead { margin-top: clamp(16px, 1.8vw, 24px); }
 .philosophy__figure { grid-column: 9 / -1; margin-top: clamp(24px, 4vw, 56px); }
 
 .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(28px, 3vw, 40px); border-top: 1px solid var(--line); }
@@ -347,7 +349,7 @@ img[data-foto]:not([src]) { visibility: hidden; }
 .quote__text footer { margin-top: 32px; font-size: 11px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--brass); }
 
 /* ---------- Il bar ---------- */
-.space__head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: 24px 64px; align-items: end; }
+.space__head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: 16px 64px; align-items: end; }
 .space__head .section-index { grid-column: 1 / -1; margin-bottom: 0; }
 .space__head .display { max-width: 18ch; }
 
@@ -358,16 +360,17 @@ img[data-foto]:not([src]) { visibility: hidden; }
 .gallery__item:hover img, .philosophy__figure:hover img { transform: scale(1.04); filter: saturate(1); }
 
 /* ---------- Il rito ---------- */
-.ritual__head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: 24px 64px; align-items: end; }
+.ritual__head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: 16px 64px; align-items: end; }
 .ritual__head .section-index { grid-column: 1 / -1; margin-bottom: 0; }
 .ritual__head .display { max-width: 14ch; }
-.ritual__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); margin-top: clamp(20px, 2.5vw, 36px); }
+.ritual { --step-num: clamp(64px, 6.4vw, 104px); }
+.ritual__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); margin-top: calc(var(--step-num) * .48 + 18px); }
 .step { position: relative; }
 .step:nth-child(2) { margin-top: clamp(20px, 3vw, 48px); }
 .step .frame { aspect-ratio: 4 / 5; }
 .step__num {
   position: absolute; z-index: 3; top: -.48em; right: 18px;
-  font-family: var(--serif); font-style: italic; font-weight: 300; font-size: clamp(72px, 8vw, 128px); line-height: 1;
+  font-family: var(--serif); font-style: italic; font-weight: 300; font-size: var(--step-num); line-height: 1;
   color: transparent; -webkit-text-stroke: 1px var(--brass); pointer-events: none;
 }
 .step__title { font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 2.4vw, 34px); line-height: 1.1; margin-top: 22px; }
@@ -378,7 +381,7 @@ img[data-foto]:not([src]) { visibility: hidden; }
 .visit { background: var(--ink-2); border-top: 1px solid var(--line); overflow: hidden; }
 .visit__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(48px, 8vw, 128px); align-items: center; }
 .visit__main .display { max-width: 12ch; }
-.visit__main .lead { margin-top: 28px; }
+.visit__main .lead { margin-top: 18px; }
 
 .address-link { display: inline-block; margin-top: clamp(36px, 4vw, 56px); position: relative; padding-bottom: 18px; }
 .address-link__text {
@@ -504,6 +507,8 @@ img[data-foto]:not([src]) { visibility: hidden; }
     padding-top: 40px;
   }
   .ritual__steps::-webkit-scrollbar, .gallery::-webkit-scrollbar { display: none; }
+  .ritual { --step-num: 58px; }
+  .ritual__steps { padding-top: 30px; margin-top: 14px; }
   .gallery { grid-auto-columns: 82%; padding-top: 0; gap: 16px; }
   .gallery .frame { height: auto; aspect-ratio: 4 / 5; }
   .step, .gallery__item { scroll-snap-align: start; }
@@ -543,15 +548,16 @@ img[data-foto]:not([src]) { visibility: hidden; }
   .address-link__sub { margin-top: 12px; font-size: 9.5px; letter-spacing: .18em; line-height: 1.6; }
   .address-link { padding-bottom: 14px; }
   .show-sm { display: inline; }
-  .visit__info { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr) minmax(0, .88fr); gap: 0 12px; margin-top: 36px; }
-  .visit__info .info-block { padding-top: 16px; font-size: clamp(11px, 3.2vw, 13px); line-height: 1.5; }
+  .visit__info { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 0 20px; margin-top: 36px; }
+  .visit__info .info-block:first-child { grid-row: span 2; }
+  .visit__info .info-block:nth-child(3) { margin-top: 18px; }
+  .visit__info .info-block { padding-top: 16px; font-size: clamp(12px, 3.5vw, 14px); line-height: 1.5; }
   .visit__info .info-block__label { font-size: 9.5px; letter-spacing: .2em; margin-bottom: 10px; }
   .visit__info .hours { font-size: inherit; }
   .visit__info .hours tr { display: block; padding-block: 3px; }
   .visit__info .hours th, .visit__info .hours td { display: block; padding: 0; text-align: left; }
   .visit__info .hours tr.is-today th::before { margin-right: 6px; }
   .visit__info .info-link { white-space: nowrap; padding-block: 2px; }
-  .visit__info .info-note { margin-top: 6px; font-size: clamp(10px, 2.9vw, 12px); line-height: 1.45; }
   .site-footer { padding-block: 18px; }
   .site-footer__inner { gap: 8px; flex-wrap: wrap; }
   .site-footer__mark svg { height: clamp(12px, 3.6vw, 14px); stroke-width: 8; }

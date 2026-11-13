@@ -320,8 +320,8 @@
   const updateStatus = () => {
     const { day } = rome();
     $$('.hours tr').forEach((tr) => tr.classList.toggle('is-today', tr.dataset.days.split(',').map(Number).includes(day)));
-    // l'etichetta sulla foto di "Dove siamo" serve solo ad annunciare l'inaugurazione
-    $$('.visit__badge').forEach((b) => { b.hidden = !beforeOpening(); });
+    // ciò che annuncia l'inaugurazione (etichetta sulla foto, riga nel menu mobile) sparisce dopo
+    $$('[data-only-before-opening]').forEach((el) => { el.hidden = !beforeOpening(); });
     const { open, text } = openStatus();
     $$('[data-open-status]').forEach((el) => {
       if (el.textContent !== text) el.textContent = text;
