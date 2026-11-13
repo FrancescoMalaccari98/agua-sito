@@ -142,7 +142,16 @@
     e.preventDefault();
     const behavior = reduceMotion ? 'auto' : 'smooth';
     if (!target) { window.scrollTo({ top: 0, behavior }); return; }
-    target.scrollIntoView({ behavior, block: 'start' });
+    // si allinea il titolo della sezione ("01 — Filosofia"), non il bordo della sezione
+    // con il suo margine interno; scendendo l'header si nasconde, salendo ricompare
+    const GAP = 28;
+    const anchor = target.matches('section') ? ($('.section-index', target) || target) : target;
+    // posizione nella pagina ignorando le animazioni di comparsa (che spostano di qualche px)
+    let y = 0;
+    for (let el = anchor; el; el = el.offsetParent) y += el.offsetTop;
+    const goingDown = y - GAP > window.scrollY;
+    const offset = goingDown && y - GAP > 600 ? GAP : $('.site-header').offsetHeight + GAP;
+    window.scrollTo({ top: Math.max(0, y - offset), behavior });
     // porta anche il focus (tastiera e lettori di schermo) senza un secondo salto
     if (!target.matches('a, button, input, select, textarea, [tabindex]')) target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });
