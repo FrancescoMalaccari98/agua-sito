@@ -305,22 +305,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: var(--mute); font-style: italic; font-family: var(--serif); font-size: 16px; }
 
 /* ---------- La carta ---------- */
-.menu { background: var(--ink-2); border-block: 1px solid var(--line); }
-.menu__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px 48px; }
-.menu__head .section-index { grid-column: 1 / -1; margin-bottom: 0; }
-.menu__head .display { max-width: 16ch; }
 
-.tabs { position: relative; display: flex; gap: 4px; border-bottom: 1px solid var(--line); }
-.tabs button {
-  background: none; border: 0; cursor: pointer; padding: 14px 18px;
-  font-size: 11px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
-  color: var(--mute); transition: color .4s var(--ease);
-}
-.tabs button:hover { color: var(--stone); }
-.tabs button[aria-selected="true"] { color: var(--ivory); }
-.tabs__ink { position: absolute; bottom: 0; left: 0; height: 1px; background: var(--brass); transition: transform .6s var(--ease-out), width .6s var(--ease-out); }
 
-.menu__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .62fr); gap: clamp(40px, 6vw, 96px); margin-top: clamp(36px, 4vw, 56px); align-items: start; }
 .drinks { animation: panelIn .8s var(--ease-out); }
 @keyframes panelIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 .drink {
@@ -339,22 +325,10 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 .drink:hover .drink__name, .drink.is-active .drink__name { color: var(--brass); transform: translateX(8px); }
 .drink:hover .drink__notes, .drink.is-active .drink__notes { color: var(--ivory); }
 
-.menu__preview { position: sticky; top: 120px; aspect-ratio: 5 / 6; overflow: hidden; background: var(--ink-3); }
-.menu__preview img { width: 100%; height: 100%; object-fit: cover; transition: opacity .6s var(--ease), transform 1.4s var(--ease-out); filter: saturate(.9); }
-.menu__preview.is-swapping img { opacity: 0; transform: scale(1.06); }
-.menu__preview::after { content: ""; position: absolute; inset: 14px; border: 1px solid var(--line-brass); pointer-events: none; }
-.menu__foot { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px 40px; }
-.menu__note { flex: 1 1 340px; font-size: 13px; color: var(--mute); max-width: 62ch; }
-.menu__fallback { color: var(--stone); }
-.menu__fallback a { color: var(--brass); text-decoration: underline; text-underline-offset: 3px; }
 .legend { display: flex; flex-wrap: wrap; gap: 10px 22px; flex-basis: 100%; }
 .legend li { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--stone); }
 .legend__glass { line-height: 0; color: var(--brass); }
 .legend__glass svg { width: 22px; height: 22px; }
-.menu__preview-glass { position: absolute; inset: 0; margin: auto; width: 42%; height: 42%; color: var(--brass); opacity: 0; transition: opacity .6s var(--ease); }
-.menu__preview.is-glass img { opacity: 0; }
-.menu__preview.is-glass .menu__preview-glass { opacity: .85; }
-.menu__preview.is-swapping .menu__preview-glass { opacity: 0; }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* ---------- Citazione ---------- */
@@ -485,14 +459,6 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 
 /* ---------- Dettagli ---------- */
 .hero__address { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--stone); margin-left: auto; margin-right: 32px; }
-.menu__preview-cap {
-  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; margin: 0;
-  padding: 72px 30px 28px;
-  background: linear-gradient(0deg, rgba(14,21,20,.9) 0%, rgba(14,21,20,.55) 45%, rgba(14,21,20,0) 100%);
-  font-family: var(--serif); font-style: italic; font-size: 28px; line-height: 1; color: var(--ivory);
-  transition: opacity .5s var(--ease);
-}
-.menu__preview.is-swapping .menu__preview-cap { opacity: 0; }
 
 /* ==========================================================================
    Responsive
@@ -503,9 +469,6 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
   .site-header__inner { height: 72px; }
   .philosophy__text { grid-column: 1 / -1; }
   .philosophy__figure { grid-column: 4 / -1; margin-top: 64px; }
-  .menu__head { grid-template-columns: 1fr; }
-  .menu__body { grid-template-columns: 1fr; }
-  .menu__preview { display: none; }
   .space__head, .ritual__head { grid-template-columns: 1fr; }
   .visit__grid { grid-template-columns: 1fr; }
   .visit__figure { width: min(100%, 520px); margin-left: auto; }
@@ -556,9 +519,6 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
   .facts div + div { padding-left: 12px; }
   .facts dt { font-size: 40px; }
   .facts dd { font-size: 12px; }
-  .tabs { overflow-x: auto; scrollbar-width: none; }
-  .tabs button { padding: 14px 10px; white-space: nowrap; letter-spacing: .16em; }
-  .tabs button:first-child { padding-left: 0; }
   .grain { display: none; }
   .drink { padding: 22px 0; }
   .visit__figure { width: 88%; }
@@ -658,7 +618,7 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 .carta .drink { padding: 18px 0; }
 .carta .drink__name { font-size: clamp(22px, 5.4vw, 30px); }
 .carta .drink:hover .drink__name, .carta .drink.is-active .drink__name { transform: none; }
-.carta__info { margin-top: clamp(44px, 7vw, 72px); padding-top: 28px; border-top: 1px solid var(--line); display: grid; gap: 18px; }
+.carta__info { margin-top: clamp(40px, 6vw, 64px); display: grid; gap: 18px; }
 .carta__info h2 { font-size: 11px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--brass); }
 .carta__info p { font-size: 14px; color: var(--mute); max-width: 62ch; }
 .carta__error { margin-top: 40px; color: var(--stone); }

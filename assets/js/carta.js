@@ -63,8 +63,6 @@
 
     return {
       valuta: get('carta.valuta', '€'),
-      nota: get('carta.nota'),
-      allergeni: get('carta.allergeni'),
       bicchieri,
       categorie,
     };
@@ -122,8 +120,6 @@
           <ul class="drinks">${c.voci.map((v) => drink(model, v)).join('')}</ul>
         </section>`).join('');
       page.querySelector('[data-carta-legend]').innerHTML = legend(model);
-      page.querySelector('[data-carta-note]').textContent = model.nota;
-      page.querySelector('[data-carta-allergens]').textContent = model.allergeni;
       page.classList.add('is-ready');
 
       // categoria attiva nella barra in alto
