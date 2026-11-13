@@ -1,0 +1,164 @@
+/* Aqua — lettura della carta da data/menu.properties
+   Usato dalla home (sezione "La carta") e dalla pagina carta.html.
+   Per cambiare il menu si modifica solo il file .properties. */
+(() => {
+  const SOURCE = 'data/menu.properties';
+  const ICONS = 'assets/icons/bicchieri.svg';
+
+  /* ---------- Parser del formato .properties ----------
+     chiave = valore (anche chiave: valore), commenti con # o !,
+     righe lunghe spezzate con \ a fine riga, sequenze \uXXXX. */
+  const parse = (text) => {
+    const props = new Map();
+    const lines = text.replace(/^﻿/, '').split(/\r?\n/);
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i].replace(/^\s+/, '');
+      if (!line || line[0] === '#' || line[0] === '!') continue;
+      while (/(^|[^\\])(\\\\)*\\$/.test(line) && i + 1 < lines.length) {
+        line = line.slice(0, -1) + lines[++i].replace(/^\s+/, '');
+      }
+      const m = line.match(/^((?:\\.|[^=:\s\\])+)\s*[=:]?\s*(.*)$/);
+      if (!m) continue;
+      const unescape = (s) => s
+        .replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+        .replace(/\\([tnrf])/g, (_, c) => ({ t: '\t', n: '\n', r: '\r', f: '\f' })[c])
+        .replace(/\\(.)/g, '$1');
+      props.set(unescape(m[1]), unescape(m[2]).trim());
+    }
+    return props;
+  };
+
+  /* ---------- Dal file al modello della carta ---------- */
+  const build = (props) => {
+    const get = (k, d = '') => (props.has(k) ? props.get(k) : d);
+    const list = (k) => get(k).split(',').map((s) => s.trim()).filter(Boolean);
+
+    const bicchieri = {};
+    props.forEach((v, k) => { const m = k.match(/^bicchiere\.([\w-]+)$/); if (m) bicchieri[m[1]] = v; });
+
+    const categorie = list('categorie').map((id) => {
+      const nums = new Set();
+      props.forEach((_, k) => {
+        const m = k.match(new RegExp(`^${id}\\.(\\d+)\\.`));
+        if (m) nums.add(Number(m[1]));
+      });
+      const voci = [...nums].sort((a, b) => a - b).map((n) => {
+        const f = (campo) => get(`${id}.${n}.${campo}`);
+        return {
+          nome: f('nome'),
+          ingredienti: f('ingredienti'),
+          prezzo: f('prezzo'),
+          bottiglia: f('prezzo.bottiglia'),
+          bicchiere: f('bicchiere').toLowerCase(),
+          foto: f('foto'),
+        };
+      }).filter((v) => v.nome);
+      return {
+        id,
+        titolo: get(`categoria.${id}.titolo`, id),
+        descrizione: get(`categoria.${id}.descrizione`),
+        voci,
+      };
+    }).filter((c) => c.voci.length);
+
+    return {
+      valuta: get('carta.valuta', '€'),
+      nota: get('carta.nota'),
+      allergeni: get('carta.allergeni'),
+      bicchieri,
+      categorie,
+    };
+  };
+
+  let cache;
+  const load = () => {
+    if (!cache) {
+      cache = fetch(SOURCE, { cache: 'no-cache' })
+        .then((r) => { if (!r.ok) throw new Error(`menu ${r.status}`); return r.text(); })
+        .then((t) => build(parse(t)));
+    }
+    return cache;
+  };
+
+  /* ---------- Pezzi di HTML ---------- */
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+  const glass = (model, id, cls = 'glass') => {
+    if (!id) return '';
+    const nome = model.bicchieri[id] || id;
+    return `<span class="${cls}" title="Servito in ${esc(nome.toLowerCase())}">`
+      + `<svg aria-hidden="true" focusable="false"><use href="${ICONS}#${esc(id)}"></use></svg>`
+      + `<span class="sr-only">Servito in ${esc(nome.toLowerCase())}</span></span>`;
+  };
+
+  const price = (model, v) => (v.prezzo
+    ? `<span class="drink__price"><span class="drink__cur">${esc(model.valuta)}</span> ${esc(v.prezzo)}</span>`
+    : '<span class="drink__price"></span>');
+
+  const drink = (model, v) => `
+    <li class="drink"${v.foto ? ` data-img="${esc(v.foto)}"` : ''}${v.bicchiere ? ` data-glass="${esc(v.bicchiere)}"` : ''}>
+      ${glass(model, v.bicchiere, 'drink__glass')}
+      <span class="drink__name">${esc(v.nome)}</span><span class="drink__leader" aria-hidden="true"></span>${price(model, v)}
+      ${v.ingredienti ? `<span class="drink__notes">${esc(v.ingredienti)}</span>` : ''}
+      ${v.bottiglia ? `<span class="drink__bottle">Bottiglia ${esc(model.valuta)} ${esc(v.bottiglia)}</span>` : ''}
+    </li>`;
+
+  const legend = (model) => {
+    const used = [...new Set(model.categorie.flatMap((c) => c.voci.map((v) => v.bicchiere)).filter(Boolean))];
+    return used.map((id) => `<li>${glass(model, id, 'legend__glass')}<span>${esc(model.bicchieri[id] || id)}</span></li>`).join('');
+  };
+
+  /* ---------- Pagina carta.html ---------- */
+  const page = document.querySelector('[data-carta-page]');
+  if (page) {
+    const nav = page.querySelector('[data-carta-nav]');
+    const body = page.querySelector('[data-carta-body]');
+    load().then((model) => {
+      nav.innerHTML = model.categorie.map((c) => `<a href="#${esc(c.id)}">${esc(c.titolo)}</a>`).join('');
+      body.innerHTML = model.categorie.map((c) => `
+        <section class="carta__cat" id="${esc(c.id)}" aria-labelledby="t-${esc(c.id)}">
+          <h2 class="carta__title" id="t-${esc(c.id)}">${esc(c.titolo)}</h2>
+          ${c.descrizione ? `<p class="carta__desc">${esc(c.descrizione)}</p>` : ''}
+          <ul class="drinks">${c.voci.map((v) => drink(model, v)).join('')}</ul>
+        </section>`).join('');
+      page.querySelector('[data-carta-legend]').innerHTML = legend(model);
+      page.querySelector('[data-carta-note]').textContent = model.nota;
+      page.querySelector('[data-carta-allergens]').textContent = model.allergeni;
+      page.classList.add('is-ready');
+
+      // categoria attiva nella barra in alto
+      const links = [...nav.querySelectorAll('a')];
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          links.forEach((a) => {
+            const on = a.getAttribute('href') === `#${en.target.id}`;
+            a.classList.toggle('is-active', on);
+            // centra la categoria attiva nella barra, senza muovere la pagina
+            if (on) nav.scrollTo({ left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2, behavior: 'smooth' });
+          });
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+      body.querySelectorAll('.carta__cat').forEach((s) => obs.observe(s));
+      // in fondo alla pagina l'ultima categoria non arriva a metà schermo: la attiviamo noi
+      window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY < document.documentElement.scrollHeight - 4) return;
+        const last = links[links.length - 1];
+        if (last && !last.classList.contains('is-active')) {
+          links.forEach((a) => a.classList.toggle('is-active', a === last));
+          nav.scrollTo({ left: nav.scrollWidth, behavior: 'smooth' });
+        }
+      }, { passive: true });
+
+      if (location.hash) {
+        const t = document.getElementById(location.hash.slice(1));
+        if (t) t.scrollIntoView();
+      }
+    }).catch(() => {
+      body.innerHTML = '<p class="carta__error">Non riusciamo a caricare la carta in questo momento. Chiedete al bancone: ve la raccontiamo noi.</p>';
+      page.classList.add('is-ready');
+    });
+  }
+
+  window.AquaCarta = { load, parse, build, drink, glass, legend, esc };
+})();

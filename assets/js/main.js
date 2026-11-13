@@ -25,7 +25,7 @@
         root.classList.remove('has-intro');
         document.body.style.overflow = '';
       }, 1150);
-    }, 1500);
+    }, 2700); // la Q, poi la parola che si apre, poi una breve pausa sul logo intero
   } else {
     root.classList.remove('has-intro');
     const heroImg = $('.hero__media img');
@@ -201,13 +201,46 @@
     revealObs.observe(el);
   });
 
-  /* ---------- Carta: schede ---------- */
-  const tabs = $$('.tabs [role="tab"]');
+  /* ---------- Carta: schede generate da data/menu.properties ---------- */
+  const tabsBox = $('[data-menu-tabs]');
+  const panelsBox = $('[data-menu-panels]');
   const ink = $('.tabs__ink');
+  const preview = $('.menu__preview');
+  const previewImg = $('img', preview);
+  const previewGlass = $('.menu__preview-glass use', preview);
+  const previewName = $('[data-preview-name]', preview);
+  let tabs = [];
+  let swapTimer;
+
   const moveInk = (tab) => {
+    if (!tab) return;
     ink.style.width = tab.offsetWidth + 'px';
     ink.style.transform = `translateX(${tab.offsetLeft}px)`;
   };
+  // foto della bevanda se c'è, altrimenti l'icona grande del bicchiere
+  function showPreview(drink) {
+    $$('.drink.is-active').forEach((d) => d.classList.remove('is-active'));
+    drink.classList.add('is-active');
+    const src = drink.dataset.img || '';
+    const name = $('.drink__name', drink).textContent;
+    if (previewName.textContent === name) return;
+    clearTimeout(swapTimer);
+    preview.classList.add('is-swapping');
+    swapTimer = setTimeout(() => {
+      const done = () => preview.classList.remove('is-swapping');
+      previewName.textContent = name;
+      preview.classList.toggle('is-glass', !src);
+      if (!src) {
+        previewGlass.setAttribute('href', `assets/icons/bicchieri.svg#${drink.dataset.glass || 'calice'}`);
+        done();
+        return;
+      }
+      if (previewImg.getAttribute('src') === src) { done(); return; }
+      previewImg.onload = done;
+      previewImg.src = src;
+      if (previewImg.complete) done();
+    }, 280);
+  }
   const selectTab = (tab, focus = false) => {
     tabs.forEach((t) => {
       const on = t === tab;
@@ -220,46 +253,43 @@
     const first = $(`#${tab.getAttribute('aria-controls')} .drink`);
     if (first) showPreview(first);
   };
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => selectTab(t));
-    t.addEventListener('keydown', (e) => {
-      const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if (dir) { e.preventDefault(); selectTab(tabs[(i + dir + tabs.length) % tabs.length], true); }
-    });
-  });
-  const syncInk = () => moveInk($('.tabs [aria-selected="true"]'));
-  window.addEventListener('resize', syncInk);
-  if (document.fonts) document.fonts.ready.then(syncInk);
-  syncInk();
 
-  /* ---------- Carta: anteprima foto al passaggio ---------- */
-  const preview = $('.menu__preview');
-  const previewImg = $('img', preview);
-  const previewName = $('[data-preview-name]', preview);
-  let swapTimer;
-  function showPreview(drink) {
-    $$('.drink.is-active').forEach((d) => d.classList.remove('is-active'));
-    drink.classList.add('is-active');
-    const src = drink.dataset.img;
-    const name = $('.drink__name', drink).textContent;
-    if (previewName.textContent === name) return;
-    clearTimeout(swapTimer);
-    preview.classList.add('is-swapping');
-    swapTimer = setTimeout(() => {
-      const done = () => preview.classList.remove('is-swapping');
-      previewName.textContent = name;
-      if (previewImg.getAttribute('src') === src) { done(); return; }
-      previewImg.onload = done;
-      previewImg.src = src;
-      if (previewImg.complete) done();
-    }, 280);
+  if (window.AquaCarta && tabsBox) {
+    const { load, drink, legend, esc } = window.AquaCarta;
+    load().then((model) => {
+      tabsBox.insertAdjacentHTML('afterbegin', model.categorie.map((c, i) => `
+        <button role="tab" id="tab-${esc(c.id)}" aria-controls="panel-${esc(c.id)}" aria-selected="${i === 0}"${i ? ' tabindex="-1"' : ''}>${esc(c.titolo)}</button>`).join(''));
+      panelsBox.innerHTML = model.categorie.map((c, i) => `
+        <ul class="drinks" role="tabpanel" tabindex="0" id="panel-${esc(c.id)}" aria-labelledby="tab-${esc(c.id)}"${i ? ' hidden' : ''}>
+          ${c.voci.map((v) => drink(model, v)).join('')}
+        </ul>`).join('');
+      $('[data-menu-legend]').innerHTML = legend(model);
+      $('[data-menu-note]').textContent = [model.nota, model.allergeni].filter(Boolean).join(' ');
+
+      tabs = $$('[role="tab"]', tabsBox);
+      tabs.forEach((t, i) => {
+        t.addEventListener('click', () => selectTab(t));
+        t.addEventListener('keydown', (e) => {
+          const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          if (dir) { e.preventDefault(); selectTab(tabs[(i + dir + tabs.length) % tabs.length], true); }
+        });
+      });
+      $$('.drink', panelsBox).forEach((d) => d.addEventListener('mouseenter', () => showPreview(d)));
+      [...new Set($$('.drink[data-img]', panelsBox).map((d) => d.dataset.img))].forEach((src) => { const i = new Image(); i.src = src; });
+      if (tabs[0]) selectTab(tabs[0]);
+      const syncInk = () => moveInk($('[aria-selected="true"]', tabsBox));
+      window.addEventListener('resize', syncInk);
+      if (document.fonts) document.fonts.ready.then(syncInk);
+    }).catch(() => {
+      panelsBox.innerHTML = '<p class="menu__fallback">La carta completa è nella <a href="carta.html">pagina dedicata</a>.</p>';
+      preview.hidden = true;
+    });
   }
-  $$('.drink').forEach((d) => d.addEventListener('mouseenter', () => showPreview(d)));
-  [...new Set($$('.drink').map((d) => d.dataset.img))].forEach((src) => { const i = new Image(); i.src = src; });
 
   /* ---------- Orari: oggi e stato apertura ---------- */
   // giorno 0=dom..6=sab → [apertura, chiusura] in minuti; oltre 1440 = dopo mezzanotte
-  const HOURS = { 0: [1080, 1440], 1: null, 2: [1110, 1500], 3: [1110, 1500], 4: [1110, 1500], 5: [1110, 1560], 6: [1110, 1560] };
+  // martedì–venerdì 17:00–22:00 · sabato e domenica 22:00–02:00 · lunedì chiuso
+  const HOURS = { 0: [1320, 1560], 1: null, 2: [1020, 1320], 3: [1020, 1320], 4: [1020, 1320], 5: [1020, 1320], 6: [1320, 1560] };
   const DAYS = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
   const now = new Date();
   const day = now.getDay();

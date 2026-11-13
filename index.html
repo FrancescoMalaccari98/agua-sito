@@ -6,7 +6,7 @@
   <title>Aqua — Cocktail bar</title>
   <meta name="description" content="Aqua, cocktail bar. Miscelazione d'autore, ghiaccio tagliato a mano e il tempo giusto per goderseli.">
   <meta name="theme-color" content="#0E1514">
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Aqua — Cocktail bar">
   <meta property="og:description" content="Miscelazione d'autore, ghiaccio tagliato a mano e il tempo giusto per goderseli.">
@@ -24,35 +24,40 @@
   </script>
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/fonts.css?v=21">
-  <link rel="stylesheet" href="assets/css/style.css?v=21">
+  <link rel="stylesheet" href="assets/css/fonts.css?v=22">
+  <link rel="stylesheet" href="assets/css/style.css?v=22">
 </head>
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
 
   <!-- ============ INTRO (solo alla prima visita della sessione) ============ -->
   <div class="intro" aria-hidden="true">
-    <div class="intro__mark">
-      <span>A</span><span>Q</span><span>U</span><span>A</span>
-    </div>
+    <!-- Prima la Q del logo, poi la parola si apre: "A" a sinistra, "UA" a destra -->
+    <svg class="intro__logo" viewBox="146 308 1084 302" focusable="false">
+      <g class="intro__word">
+        <path class="intro__a" fill-rule="evenodd" d="M150,591 L279,314 L408,591 L368,591 L336,521 L222,521 L190,591 Z M279,394 L321,491 L237,491 Z"/>
+        <g class="intro__q"><g transform="translate(428.54 316.94) scale(0.594)"><path d="M91.47,57.81 A211.0,233.0 0 0 1 402.40,362.65 L353.73,314.93 A146.5,166.0 0 0 0 138.77,104.18 Z"/><path d="M38.46,127.02 A211.0,233.0 0 0 0 346.44,428.96 L298.68,382.14 A146.5,166.0 0 0 1 87.98,175.57 Z"/><path d="M79.60,69.99 L493.73,476.00 L418.71,476.00 L42.83,107.49 Z"/></g></g>
+        <g class="intro__ua"><path d="M749,326 V500 A99,98 0 0 0 947,500 V326 H910 V500 A62.5,65 0 0 1 785,500 V326 Z"/><path fill-rule="evenodd" d="M966,591 L1095,314 L1224,591 L1184,591 L1152,521 L1038,521 L1006,591 Z M1095,394 L1137,491 L1053,491 Z"/></g>
+      </g>
+    </svg>
     <span class="intro__line"></span>
   </div>
 
   <!-- ============ HEADER ============ -->
   <header class="site-header" id="top">
     <div class="site-header__inner">
-      <a class="wordmark" href="#top" aria-label="Aqua, torna all'inizio">Aqua</a>
+      <a class="wordmark" href="#top" aria-label="Aqua, torna all'inizio"><svg class="logo" viewBox="0 0 1084 302" aria-hidden="true" focusable="false"><use href="assets/brand/logo.svg#aqua"></use></svg></a>
 
       <nav class="nav" aria-label="Navigazione principale">
         <ul class="nav__list">
           <li><a href="#filosofia">Filosofia</a></li>
-          <li><a href="#carta">La carta</a></li>
+          <li><a href="carta.html">La carta</a></li>
           <li><a href="#rito">Il rito</a></li>
           <li><a href="#bar">Il bar</a></li>
         </ul>
       </nav>
 
-      <a class="btn btn--ghost site-header__cta" href="#contatti">Dove siamo</a>
+      <a class="btn btn--ghost site-header__cta" href="#contatti-info">Contatti</a>
 
       <button class="burger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Apri il menu">
         <span></span><span></span>
@@ -64,13 +69,13 @@
     <nav aria-label="Menu mobile">
       <ol class="mobile-menu__list">
         <li><a href="#filosofia"><span>01</span>Filosofia</a></li>
-        <li><a href="#carta"><span>02</span>La carta</a></li>
+        <li><a href="carta.html"><span>02</span>La carta</a></li>
         <li><a href="#rito"><span>03</span>Il rito</a></li>
         <li><a href="#bar"><span>04</span>Il bar</a></li>
         <li><a href="#contatti"><span>05</span>Dove siamo</a></li>
       </ol>
     </nav>
-    <p class="mobile-menu__foot">Via del Porto 12 · <span data-open-status>Stasera dalle 18:30</span></p>
+    <p class="mobile-menu__foot">Corso Umberto I, 31 · <span data-open-status>Stasera dalle 17:00</span></p>
   </div>
 
   <main id="main">
@@ -97,17 +102,17 @@
           <span class="line"><span data-hero-step>lentamente.</span></span>
         </h1>
         <div class="hero__actions" data-hero-step>
-          <a class="btn btn--solid" href="#carta">Scopri la carta</a>
+          <a class="btn btn--solid" href="carta.html">Scopri la carta</a>
           <a class="link-arrow" href="#contatti">Dove trovarci <span aria-hidden="true">→</span></a>
         </div>
       </div>
 
       <div class="hero__meta wrap" data-hero-step>
         <!-- Conto alla rovescia: sparisce da solo all'ora dell'inaugurazione -->
-        <div class="countdown" data-countdown="2026-12-18T18:30:00+01:00">
+        <div class="countdown" data-countdown="2026-11-26T19:00:00+01:00">
           <p class="countdown__label">
             <span class="status__dot" aria-hidden="true"></span>
-            <span>Inaugurazione<span class="countdown__date"> · <time datetime="2026-12-18T18:30"><span class="hide-sm">venerdì </span>18 dicembre, <span class="hide-sm">ore </span>18:30</time></span></span>
+            <span>Inaugurazione<span class="countdown__date"> · <time datetime="2026-11-26T19:00"><span class="hide-sm">giovedì </span>26 novembre, <span class="hide-sm">ore </span>19:00</time></span></span>
           </p>
           <div class="countdown__units" role="timer" aria-label="Tempo all'inaugurazione">
             <div class="countdown__unit"><span class="countdown__num" data-unit="d">--</span><span class="countdown__cap">giorni</span></div>
@@ -119,8 +124,8 @@
             <div class="countdown__unit"><span class="countdown__num" data-unit="s">--</span><span class="countdown__cap">secondi</span></div>
           </div>
         </div>
-        <p class="status" hidden><span class="status__dot" aria-hidden="true"></span><span data-open-status>Stasera dalle 18:30</span></p>
-        <p class="hero__address hide-sm">Via del Porto 12</p>
+        <p class="status" hidden><span class="status__dot" aria-hidden="true"></span><span data-open-status>Stasera dalle 17:00</span></p>
+        <p class="hero__address hide-sm">Corso Umberto I, 31</p>
         <a class="scroll-cue" href="#filosofia" aria-label="Scorri alla sezione Filosofia"><span></span></a>
       </div>
     </section>
@@ -170,77 +175,29 @@
           </div>
           <h2 class="display reveal" id="menu-title">Ciò che versiamo <em>stasera</em></h2>
 
-          <div class="tabs reveal" role="tablist" aria-label="Categorie della carta">
-            <button role="tab" id="tab-signature" aria-controls="panel-signature" aria-selected="true">Signature</button>
-            <button role="tab" id="tab-classici" aria-controls="panel-classici" aria-selected="false" tabindex="-1">Classici</button>
-            <button role="tab" id="tab-zero" aria-controls="panel-zero" aria-selected="false" tabindex="-1">Zero alcol</button>
+          <div class="tabs reveal" role="tablist" aria-label="Categorie della carta" data-menu-tabs>
             <span class="tabs__ink" aria-hidden="true"></span>
           </div>
         </div>
 
+        <!-- Schede e voci arrivano da data/menu.properties (vedi assets/js/carta.js) -->
         <div class="menu__body">
-          <div class="menu__panels">
-            <ul class="drinks" role="tabpanel" tabindex="0" id="panel-signature" aria-labelledby="tab-signature">
-              <li class="drink" data-img="assets/img/foto-846bb9981813.jpg">
-                <span class="drink__name">Marea</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">14</span>
-                <span class="drink__notes">Gin al finocchietto marino, vermouth bianco, bitter al bergamotto</span>
-              </li>
-              <li class="drink" data-img="assets/img/foto-3bc16c4c7d1b.jpg">
-                <span class="drink__name">Ottone</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">15</span>
-                <span class="drink__notes">Rye whiskey, amaro alle erbe, miele di castagno, fumo di ciliegio</span>
-              </li>
-              <li class="drink" data-img="assets/img/foto-c7306c1976bc.jpg">
-                <span class="drink__name">Ora blu</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">13</span>
-                <span class="drink__notes">Rum agricolo, lime, sciroppo di tè affumicato, soda al pompelmo</span>
-              </li>
-              <li class="drink" data-img="assets/img/foto-cb7f31384c19.jpg">
-                <span class="drink__name">Fico d'inverno</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">14</span>
-                <span class="drink__notes">Cognac, fico nero, sherry oloroso, gocce di cacao</span>
-              </li>
-            </ul>
-
-            <ul class="drinks" role="tabpanel" tabindex="0" id="panel-classici" aria-labelledby="tab-classici" hidden>
-              <li class="drink" data-img="assets/img/foto-3bc16c4c7d1b.jpg">
-                <span class="drink__name">Negroni</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">11</span>
-                <span class="drink__notes">Gin, bitter, vermouth rosso. Mescolato, mai agitato</span>
-              </li>
-              <li class="drink" data-img="assets/img/foto-46ad1756a187.jpg">
-                <span class="drink__name">Old Fashioned</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">12</span>
-                <span class="drink__notes">Bourbon, zucchero demerara, Angostura, scorza d'arancia</span>
-              </li>
-              <li class="drink" data-img="assets/img/foto-62ca0d244b39.jpg">
-                <span class="drink__name">Martini</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">12</span>
-                <span class="drink__notes">Gin o vodka, vermouth secco, oliva o twist di limone</span>
-              </li>
-              <li class="drink" data-img="assets/img/foto-cb7f31384c19.jpg">
-                <span class="drink__name">Daiquiri</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">11</span>
-                <span class="drink__notes">Rum bianco, lime, zucchero. Nient'altro</span>
-              </li>
-            </ul>
-
-            <ul class="drinks" role="tabpanel" tabindex="0" id="panel-zero" aria-labelledby="tab-zero" hidden>
-              <li class="drink" data-img="assets/img/foto-c7306c1976bc.jpg">
-                <span class="drink__name">Giardino</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">9</span>
-                <span class="drink__notes">Cetriolo, basilico, verjus, tonica artigianale</span>
-              </li>
-              <li class="drink" data-img="assets/img/foto-846bb9981813.jpg">
-                <span class="drink__name">Agrumeto</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">9</span>
-                <span class="drink__notes">Arancia rossa, chinotto, rosmarino, soda</span>
-              </li>
-              <li class="drink" data-img="assets/img/foto-b021ee887b13.jpg">
-                <span class="drink__name">Brace</span><span class="drink__leader" aria-hidden="true"></span><span class="drink__price">10</span>
-                <span class="drink__notes">Tè lapsang affumicato, miele, limone, bitter analcolico</span>
-              </li>
-            </ul>
+          <div class="menu__panels" data-menu-panels>
+            <noscript><p class="menu__fallback">La carta completa è nella <a href="carta.html">pagina dedicata</a>.</p></noscript>
           </div>
 
           <figure class="menu__preview" aria-hidden="true">
             <img alt="" src="assets/img/foto-846bb9981813.jpg">
-            <figcaption class="menu__preview-cap"><span data-preview-name>Marea</span></figcaption>
+            <svg class="menu__preview-glass" focusable="false"><use href=""></use></svg>
+            <figcaption class="menu__preview-cap"><span data-preview-name></span></figcaption>
           </figure>
         </div>
 
-        <p class="menu__foot reveal">Prezzi in euro. La carta cambia con le stagioni; chiedete al bancone il fuori menu della sera.</p>
+        <div class="menu__foot reveal">
+          <ul class="legend" data-menu-legend aria-label="Come serviamo"></ul>
+          <p class="menu__note" data-menu-note></p>
+          <a class="link-arrow" href="carta.html">Apri la carta completa <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
 
@@ -333,29 +290,28 @@
             <h2 class="display reveal" id="visit-title">Vi aspettiamo <em>al bancone.</em></h2>
             <p class="lead reveal">Niente prenotazioni: i posti si assegnano in ordine di arrivo. Il momento più tranquillo è subito dopo l'apertura.</p>
 
-            <a class="address-link reveal" href="https://maps.google.com/?q=Via+del+Porto+12" target="_blank" rel="noopener">
-              <span class="address-link__text">Via del Porto 12</span>
-              <span class="address-link__sub">00100 Città · Indicazioni <span aria-hidden="true">↗</span></span>
+            <a class="address-link reveal" href="https://www.google.com/maps/search/?api=1&amp;query=Corso+Umberto+I+31" target="_blank" rel="noopener">
+              <span class="address-link__text">Corso Umberto I, 31</span>
+              <span class="address-link__sub">Indicazioni <span aria-hidden="true">↗</span></span>
             </a>
           </div>
 
           <figure class="visit__figure reveal">
             <div class="frame"><img loading="lazy" src="assets/img/foto-9710e4a00a20.jpg" alt="Sala del bar con luci calde e scaffali di bottiglie"></div>
             <div class="visit__badge">
-              <span class="status"><span class="status__dot" aria-hidden="true"></span><span data-open-status>Stasera dalle 18:30</span></span>
+              <span class="status"><span class="status__dot" aria-hidden="true"></span><span data-open-status>Stasera dalle 17:00</span></span>
             </div>
           </figure>
         </div>
 
-        <div class="visit__info">
+        <div class="visit__info" id="contatti-info">
           <div class="info-block reveal">
             <h3 class="info-block__label">Orari</h3>
             <table class="hours">
               <tbody>
                 <tr data-days="1"><th scope="row">Lunedì</th><td>Chiuso</td></tr>
-                <tr data-days="2,3,4"><th scope="row">Martedì — Giovedì</th><td>18:30 — 01:00</td></tr>
-                <tr data-days="5,6"><th scope="row">Venerdì — Sabato</th><td>18:30 — 02:00</td></tr>
-                <tr data-days="0"><th scope="row">Domenica</th><td>18:00 — 00:00</td></tr>
+                <tr data-days="2,3,4,5"><th scope="row">Martedì — Venerdì</th><td>17:00 — 22:00</td></tr>
+                <tr data-days="6,0"><th scope="row">Sabato — Domenica</th><td>22:00 — 02:00</td></tr>
               </tbody>
             </table>
           </div>
@@ -379,14 +335,15 @@
   <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
     <div class="wrap site-footer__inner">
-      <p class="site-footer__mark" aria-hidden="true">Aqua</p>
-      <p class="site-footer__small">© <span data-year>2026</span> Aqua cocktail bar · P.IVA 00000000000</p>
+      <p class="site-footer__mark" aria-hidden="true"><svg viewBox="0 0 1084 302" focusable="false"><use href="assets/brand/logo.svg#aqua"></use></svg></p>
+      <p class="site-footer__small">© <span data-year>2026</span> Aqua cocktail bar</p>
       <p class="site-footer__small site-footer__legal"><a href="privacy.html">Privacy</a> · <a href="privacy.html#cookie">Cookie</a> · Bevi responsabilmente.</p>
       <a class="site-footer__top" href="#top">Torna su ↑</a>
     </div>
   </footer>
 
   <div class="grain" aria-hidden="true"></div>
-  <script src="assets/js/main.js?v=21" defer></script>
+  <script src="assets/js/carta.js?v=22" defer></script>
+  <script src="assets/js/main.js?v=22" defer></script>
 </body>
 </html>
