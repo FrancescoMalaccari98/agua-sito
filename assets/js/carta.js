@@ -154,5 +154,18 @@
     });
   }
 
+  /* ---------- Foto di sfondo della carta: il percorso è in data/foto.properties ---------- */
+  const sfondi = document.querySelectorAll('img[data-foto]');
+  if (sfondi.length) {
+    window.AquaProps.load('data/foto.properties').then((p) => {
+      sfondi.forEach((img) => {
+        const path = p.get(`${img.dataset.foto}.foto`);
+        if (!path) return;
+        img.addEventListener('load', () => img.classList.add('is-loaded'), { once: true });
+        img.src = path;
+      });
+    }).catch(() => {});
+  }
+
   window.AquaCarta = { load, parse, build, drink, glass, legend, esc };
 })();

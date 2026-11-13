@@ -286,6 +286,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 
 /* ---------- Filosofia ---------- */
+.philosophy.section { padding-top: clamp(12px, 2vw, 28px); }
 .philosophy__grid {
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start;
 }
@@ -295,8 +296,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .philosophy__text .lead { margin-top: clamp(28px, 3vw, 40px); }
 .philosophy__figure { grid-column: 9 / -1; margin-top: clamp(24px, 4vw, 56px); }
 
-.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(40px, 4vw, 56px); border-top: 1px solid var(--line); }
-.facts div { padding: 24px 20px 0 0; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(28px, 3vw, 40px); border-top: 1px solid var(--line); }
+.facts div { padding: 16px 20px 0 0; }
 .facts div + div { padding-left: 20px; border-left: 1px solid var(--line); }
 .facts dt { font-family: var(--serif); font-size: clamp(44px, 4.4vw, 64px); font-weight: 300; line-height: 1; color: var(--brass); }
 .facts dd { margin-top: 10px; font-size: 13px; color: var(--stone); max-width: 18ch; line-height: 1.5; }
@@ -360,7 +361,7 @@ img[data-foto]:not([src]) { visibility: hidden; }
 .ritual__head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: 24px 64px; align-items: end; }
 .ritual__head .section-index { grid-column: 1 / -1; margin-bottom: 0; }
 .ritual__head .display { max-width: 14ch; }
-.ritual__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); margin-top: clamp(56px, 6vw, 88px); }
+.ritual__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); margin-top: clamp(20px, 2.5vw, 36px); }
 .step { position: relative; }
 .step:nth-child(2) { margin-top: clamp(20px, 3vw, 48px); }
 .step .frame { aspect-ratio: 4 / 5; }
@@ -475,10 +476,21 @@ img[data-foto]:not([src]) { visibility: hidden; }
   .burger { display: block; }
   .site-header__inner { height: 72px; }
   .philosophy__text { grid-column: 1 / -1; }
-  .philosophy__figure { grid-column: 4 / -1; margin-top: 64px; }
+  .philosophy__figure { grid-column: 4 / -1; margin-top: 24px; }
   .space__head, .ritual__head { grid-template-columns: 1fr; }
-  .visit__grid { grid-template-columns: 1fr; }
-  .visit__figure { width: min(100%, 520px); margin-left: auto; }
+  .visit__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 clamp(16px, 4vw, 40px); align-items: center; }
+  .visit__main { display: contents; }
+  .visit__main > * { grid-column: 1 / -1; }
+  .visit__main > .address-link { grid-column: 1; margin-top: clamp(28px, 5vw, 48px); align-self: center; justify-self: start; }
+  .visit__figure { grid-column: 2; width: 100%; margin-top: clamp(28px, 5vw, 48px); }
+  .visit__figure .frame { aspect-ratio: 4 / 5; }
+  .visit__figure .frame::after { inset: 8px; }
+  .address-link__city, .address-link__go { display: block; }
+  .address-link__go { margin-top: 8px; color: var(--brass); }
+  .address-link__sep { display: none; }
+  .address-link__city, .visit__badge [data-open-status] { text-wrap: balance; }
+  .visit__badge { position: static; margin-top: 10px; padding: 10px 12px; }
+  .visit__badge .status { font-size: 10px; letter-spacing: .1em; gap: 8px; line-height: 1.4; }
 }
 
 @media (max-width: 800px) {
@@ -524,9 +536,10 @@ img[data-foto]:not([src]) { visibility: hidden; }
   .facts dd { font-size: 12px; }
   .grain { display: none; }
   .drink { padding: 22px 0; }
-  .visit__figure { width: 88%; }
   .philosophy__figure .frame { aspect-ratio: 4 / 3; }
-  .visit__badge { left: -16px; bottom: 24px; padding: 12px 16px; }
+  .address-link__text { font-size: clamp(26px, 7.6vw, 36px); line-height: 1.08; text-wrap: balance; }
+  .address-link__sub { margin-top: 12px; font-size: 9.5px; letter-spacing: .18em; line-height: 1.6; }
+  .address-link { padding-bottom: 14px; }
   .show-sm { display: inline; }
   .visit__info { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr) minmax(0, .88fr); gap: 0 12px; margin-top: 36px; }
   .visit__info .info-block { padding-top: 16px; font-size: clamp(11px, 3.2vw, 13px); line-height: 1.5; }
@@ -608,6 +621,22 @@ img[data-foto]:not([src]) { visibility: hidden; }
 }
 
 /* ---------- Pagina carta.html ---------- */
+/* foto fissa dietro al menu: sfocata e scurita perché il testo resti leggibile */
+.carta-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: var(--ink); }
+.carta-bg img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: blur(2.5px) saturate(.85) brightness(.72);
+  opacity: 0; transform: scale(1.1);
+  transition: opacity 1.4s var(--ease), transform 3s var(--ease-out);
+}
+.carta-bg img.is-loaded { opacity: 1; transform: scale(1.04); }
+.carta-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 75% 65% at 50% 45%, rgba(14, 21, 20, .2), rgba(14, 21, 20, .7)),
+    linear-gradient(180deg, rgba(14, 21, 20, .4) 0%, rgba(14, 21, 20, .5) 50%, rgba(14, 21, 20, .82) 100%);
+}
+@media (prefers-reduced-motion: reduce) { .carta-bg img { transition: opacity .4s linear; transform: none; } }
 .carta { max-width: 860px; padding-block: clamp(36px, 6vw, 72px) clamp(56px, 8vw, 96px); }
 .carta .eyebrow { margin-bottom: 14px; }
 .carta__lead { margin-top: 14px; color: var(--stone); max-width: 52ch; }

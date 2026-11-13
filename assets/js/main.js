@@ -278,52 +278,61 @@
     revealObs.observe(el);
   });
 
-  /* ---------- Orari: oggi e stato apertura ---------- */
+  /* ---------- Orari: oggi e stato apertura ----------
+     Sempre all'ora italiana, anche per chi apre il sito da un altro fuso orario.
+     Prima dell'inaugurazione dice "Inaugurazione …"; dopo si calcola da solo dagli orari
+     qui sotto e si aggiorna ogni minuto (e allo scadere del conto alla rovescia). */
   // giorno 0=dom..6=sab → [apertura, chiusura] in minuti; oltre 1440 = dopo mezzanotte
   // martedì–venerdì 17:00–22:00 · sabato e domenica 22:00–02:00 · lunedì chiuso
   const HOURS = { 0: [1320, 1560], 1: null, 2: [1020, 1320], 3: [1020, 1320], 4: [1020, 1320], 5: [1020, 1320], 6: [1320, 1560] };
   const DAYS = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
-  const now = new Date();
-  const day = now.getDay();
-  const mins = now.getHours() * 60 + now.getMinutes();
-  const fmt = (m) => `${String(Math.floor((m % 1440) / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
-  $$('.hours tr').forEach((tr) => {
-    if (tr.dataset.days.split(',').map(Number).includes(day)) tr.classList.add('is-today');
+  const romeClock = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Rome', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
   });
+  const rome = () => {
+    const p = Object.fromEntries(romeClock.formatToParts(new Date()).map((x) => [x.type, x.value]));
+    return { day: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday), mins: Number(p.hour) * 60 + Number(p.minute) };
+  };
+  const fmt = (m) => `${String(Math.floor((m % 1440) / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
 
-  const today = HOURS[day];
-  const yesterday = HOURS[(day + 6) % 7];
-  let text;
-  let open = false;
-  if (yesterday && yesterday[1] > 1440 && mins < yesterday[1] - 1440) {
-    open = true; text = `Aperto ora · fino alle ${fmt(yesterday[1])}`;
-  } else if (today && mins >= today[0] && mins < today[1]) {
-    open = true; text = `Aperto ora · fino alle ${fmt(today[1])}`;
-  } else if (today && mins < today[0]) {
-    text = `Stasera dalle ${fmt(today[0])}`;
-  } else {
-    let d = 1;
-    while (!HOURS[(day + d) % 7]) d++;
-    const label = d === 1 ? 'Domani' : DAYS[(day + d) % 7].replace(/^./, (c) => c.toUpperCase());
-    text = `${label} dalle ${fmt(HOURS[(day + d) % 7][0])}`;
-  }
-  /* ---------- Conto alla rovescia all'inaugurazione ---------- */
   const countdown = $('[data-countdown]');
   const opening = countdown ? new Date(countdown.dataset.countdown) : null;
   const beforeOpening = () => !!opening && Date.now() < opening.getTime();
 
-  // prima dell'inaugurazione nessuno stato deve dire "aperto"
-  if (beforeOpening()) {
-    const openingDay = opening.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', timeZone: 'Europe/Rome' });
-    text = `Inaugurazione ${openingDay}`;
-    open = false;
-  }
-  $$('[data-open-status]').forEach((el) => {
-    el.textContent = text;
-    const status = el.closest('.status');
-    if (status) status.classList.toggle('is-closed', !open);
-  });
+  const openStatus = () => {
+    // prima dell'inaugurazione nessuno stato deve dire "aperto"
+    if (beforeOpening()) {
+      const openingDay = opening.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', timeZone: 'Europe/Rome' });
+      return { open: false, text: `Inaugurazione ${openingDay}` };
+    }
+    const { day, mins } = rome();
+    const today = HOURS[day];
+    const yesterday = HOURS[(day + 6) % 7];
+    if (yesterday && yesterday[1] > 1440 && mins < yesterday[1] - 1440) return { open: true, text: `Aperto ora · fino alle ${fmt(yesterday[1])}` };
+    if (today && mins >= today[0] && mins < today[1]) return { open: true, text: `Aperto ora · fino alle ${fmt(today[1])}` };
+    if (today && mins < today[0]) return { open: false, text: `Stasera dalle ${fmt(today[0])}` };
+    let d = 1;
+    while (!HOURS[(day + d) % 7]) d++;
+    const label = d === 1 ? 'Domani' : DAYS[(day + d) % 7].replace(/^./, (c) => c.toUpperCase());
+    return { open: false, text: `${label} dalle ${fmt(HOURS[(day + d) % 7][0])}` };
+  };
 
+  const updateStatus = () => {
+    const { day } = rome();
+    $$('.hours tr').forEach((tr) => tr.classList.toggle('is-today', tr.dataset.days.split(',').map(Number).includes(day)));
+    const { open, text } = openStatus();
+    $$('[data-open-status]').forEach((el) => {
+      if (el.textContent !== text) el.textContent = text;
+      const status = el.closest('.status');
+      if (status) status.classList.toggle('is-closed', !open);
+    });
+  };
+  updateStatus();
+  // si ricontrolla all'inizio di ogni minuto: alle 17:00 diventa "Aperto ora", alle 22:00 si chiude
+  const nextMinute = () => setTimeout(() => { updateStatus(); nextMinute(); }, 60000 - (Date.now() % 60000) + 50);
+  nextMinute();
+
+  /* ---------- Conto alla rovescia all'inaugurazione ---------- */
   if (countdown) {
     const heroStatus = $('.hero__meta .status');
     const nums = Object.fromEntries($$('[data-unit]', countdown).map((el) => [el.dataset.unit, el]));
@@ -338,9 +347,11 @@
         el.classList.add('is-tick');
       }
     };
+    // allo scadere: il conto alla rovescia lascia il posto allo stato aperto/chiuso calcolato dagli orari
     const finish = () => {
       countdown.hidden = true;
       heroStatus.hidden = false;
+      updateStatus();
     };
     const render = () => {
       const diff = opening.getTime() - Date.now();
@@ -357,5 +368,5 @@
   }
 
   /* ---------- Anno nel footer ---------- */
-  $('[data-year]').textContent = now.getFullYear();
+  $('[data-year]').textContent = new Date().getFullYear();
 })();
