@@ -124,32 +124,52 @@
 
       // categoria attiva nella barra in alto
       const links = [...nav.querySelectorAll('a')];
+      let jumping = 0; // durante il salto a una categoria la barra non si aggiorna da sola
+      const setActive = (id, smooth) => links.forEach((a) => {
+        const on = a.getAttribute('href') === `#${id}`;
+        a.classList.toggle('is-active', on);
+        // centra la categoria attiva nella barra, senza muovere la pagina
+        if (on) nav.scrollTo({ left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2, behavior: smooth ? 'smooth' : 'auto' });
+      });
       const obs = new IntersectionObserver((entries) => {
-        entries.forEach((en) => {
-          if (!en.isIntersecting) return;
-          links.forEach((a) => {
-            const on = a.getAttribute('href') === `#${en.target.id}`;
-            a.classList.toggle('is-active', on);
-            // centra la categoria attiva nella barra, senza muovere la pagina
-            if (on) nav.scrollTo({ left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2, behavior: 'smooth' });
-          });
-        });
+        if (jumping) return;
+        entries.forEach((en) => { if (en.isIntersecting) setActive(en.target.id, true); });
       }, { rootMargin: '-30% 0px -60% 0px' });
+
+      // salto a una categoria: il titolo si ferma appena sotto la barra delle categorie
+      const jumpTo = (id, smooth) => {
+        const sec = document.getElementById(id);
+        if (!sec) return;
+        const title = sec.querySelector('.carta__title') || sec;
+        let y = 0;
+        for (let el = title; el; el = el.offsetParent) y += el.offsetTop;
+        setActive(id, false);
+        clearTimeout(jumping);
+        jumping = setTimeout(() => { jumping = 0; }, smooth ? 1200 : 100);
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: Math.max(0, y - nav.offsetHeight - 22), behavior: smooth && !reduce ? 'smooth' : 'auto' });
+      };
+      nav.addEventListener('click', (e) => {
+        const a = e.target.closest('a');
+        if (!a) return;
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        history.replaceState(null, '', `#${id}`);
+        jumpTo(id, true);
+      });
       body.querySelectorAll('.carta__cat').forEach((s) => obs.observe(s));
       // in fondo alla pagina l'ultima categoria non arriva a metà schermo: la attiviamo noi
       window.addEventListener('scroll', () => {
         if (window.innerHeight + window.scrollY < document.documentElement.scrollHeight - 4) return;
         const last = links[links.length - 1];
         if (last && !last.classList.contains('is-active')) {
+          if (jumping) return;
           links.forEach((a) => a.classList.toggle('is-active', a === last));
           nav.scrollTo({ left: nav.scrollWidth, behavior: 'smooth' });
         }
       }, { passive: true });
 
-      if (location.hash) {
-        const t = document.getElementById(location.hash.slice(1));
-        if (t) t.scrollIntoView();
-      }
+      if (location.hash) jumpTo(decodeURIComponent(location.hash.slice(1)), false);
     }).catch(() => {
       body.innerHTML = '<p class="carta__error">Non riusciamo a caricare la carta in questo momento. Chiedete al bancone: ve la raccontiamo noi.</p>';
       page.classList.add('is-ready');

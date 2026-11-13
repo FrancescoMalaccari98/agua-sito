@@ -187,12 +187,14 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   font-family: var(--serif); font-size: clamp(34px, 9vw, 48px); font-weight: 300; line-height: 1.1;
   transform: translateY(100%); transition: transform .7s var(--ease-out);
 }
-.mobile-menu__list a span { font-size: 14px; color: var(--brass); font-family: var(--sans); letter-spacing: .1em; }
+.mobile-menu__ico { flex: none; align-self: center; width: 22px; height: 22px; color: var(--brass); opacity: .85; }
 .mobile-menu.is-open .mobile-menu__list a { transform: none; }
 .mobile-menu.is-open li:nth-child(2) a { transition-delay: .05s; }
 .mobile-menu.is-open li:nth-child(3) a { transition-delay: .1s; }
 .mobile-menu.is-open li:nth-child(4) a { transition-delay: .15s; }
 .mobile-menu.is-open li:nth-child(5) a { transition-delay: .2s; }
+.mobile-menu__bottom { display: grid; gap: 18px; justify-items: start; }
+.mobile-menu__q { width: 40px; height: auto; aspect-ratio: 488 / 476; fill: var(--brass); }
 .mobile-menu__foot { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--stone); }
 
 /* ---------- Hero ---------- */
@@ -408,14 +410,15 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 .info-note { margin-top: 10px; font-size: 14px; color: var(--mute); max-width: 30ch; }
 
 /* ---------- Footer ---------- */
-.site-footer { border-top: 1px solid var(--line); padding-block: 48px 36px; }
-.site-footer__inner { display: grid; grid-template-columns: 1fr auto auto auto; gap: 16px 48px; align-items: end; }
-.site-footer__mark { line-height: 0; }
-.site-footer__mark svg { display: block; height: clamp(44px, 7vw, 108px); width: auto; aspect-ratio: 1084 / 302; fill: var(--ink-3); stroke: var(--line-brass); stroke-width: 3; }
-.site-footer__small { font-size: 12px; color: var(--mute); }
+/* una sola riga, anche su mobile */
+.site-footer { border-top: 1px solid var(--line); padding-block: 22px; }
+.site-footer__inner { display: flex; align-items: center; gap: 12px 32px; }
+.site-footer__mark { line-height: 0; margin-right: auto; }
+.site-footer__mark svg { display: block; height: 22px; width: auto; aspect-ratio: 1084 / 302; fill: var(--ink-3); stroke: var(--line-brass); stroke-width: 6; }
+.site-footer__small { font-size: 12px; color: var(--mute); white-space: nowrap; }
 .site-footer__legal a { display: inline-block; padding-block: 6px; color: var(--stone); text-decoration: underline; text-decoration-color: var(--line-brass); text-underline-offset: 3px; transition: color .3s var(--ease); }
 .site-footer__legal a:hover { color: var(--brass); }
-.site-footer__top { display: inline-block; padding-block: 12px; font-size: 11px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--brass); }
+.site-footer__top { display: inline-block; padding-block: 8px; white-space: nowrap; font-size: 11px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--brass); }
 
 /* ---------- Grana pellicola ---------- */
 .grain {
@@ -475,8 +478,6 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
   .visit__figure { width: min(100%, 520px); margin-left: auto; }
   .visit__info { grid-template-columns: 1fr 1fr; gap: 0 40px; }
   .visit__info .info-block:first-child { grid-column: 1 / -1; margin-bottom: 40px; }
-  .site-footer__inner { grid-template-columns: 1fr 1fr; }
-  .site-footer__mark { grid-column: 1 / -1; }
 }
 
 @media (max-width: 800px) {
@@ -528,7 +529,11 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
   .visit__info { grid-template-columns: 1fr 1fr; gap: 0 24px; }
   .visit__info .info-block { margin-bottom: 28px; font-size: 15px; }
   .visit__info .info-block:first-child { margin-bottom: 28px; }
-  .site-footer__inner { grid-template-columns: 1fr; }
+  .site-footer { padding-block: 18px; }
+  .site-footer__inner { gap: 8px; flex-wrap: wrap; }
+  .site-footer__mark svg { height: clamp(12px, 3.6vw, 14px); stroke-width: 8; }
+  .site-footer__small { font-size: clamp(8.5px, 2.68vw, 10.5px); }
+  .site-footer__top { font-size: 13px; letter-spacing: 0; padding: 6px 0 6px 4px; }
 }
 
 @media (max-width: 400px) {
@@ -612,7 +617,7 @@ figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .06em; color: va
 }
 .carta__nav a:hover { color: var(--ivory); border-color: var(--line-brass); }
 .carta__nav a.is-active { color: var(--ink); background: var(--brass); border-color: var(--brass); }
-.carta__cat { padding-top: clamp(36px, 6vw, 60px); scroll-margin-top: 64px; }
+.carta__cat { padding-top: clamp(36px, 6vw, 60px); scroll-margin-top: 50px; }
 .carta__title { font-family: var(--serif); font-weight: 300; font-size: clamp(34px, 6vw, 52px); line-height: 1.05; }
 .carta__desc { margin: 8px 0 18px; font-size: 15px; color: var(--stone); }
 .carta .drinks { animation: none; }

@@ -24,8 +24,8 @@
   </script>
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/fonts.css?v=25">
-  <link rel="stylesheet" href="assets/css/style.css?v=25">
+  <link rel="stylesheet" href="assets/css/fonts.css?v=26">
+  <link rel="stylesheet" href="assets/css/style.css?v=27">
 </head>
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
@@ -68,14 +68,17 @@
   <div class="mobile-menu" id="mobile-menu" hidden>
     <nav aria-label="Menu mobile">
       <ol class="mobile-menu__list">
-        <li><a href="#filosofia"><span>01</span>Filosofia</a></li>
-        <li><a href="carta.html"><span>02</span>La carta</a></li>
-        <li><a href="#rito"><span>03</span>Il rito</a></li>
-        <li><a href="#bar"><span>04</span>Il bar</a></li>
-        <li><a href="#contatti"><span>05</span>Dove siamo</a></li>
+        <li><a href="#filosofia"><svg class="mobile-menu__ico" aria-hidden="true" focusable="false"><use href="assets/icons/bicchieri.svg#coppa"></use></svg>Filosofia</a></li>
+        <li><a href="carta.html"><svg class="mobile-menu__ico" aria-hidden="true" focusable="false"><use href="assets/icons/bicchieri.svg#martini"></use></svg>La carta</a></li>
+        <li><a href="#rito"><svg class="mobile-menu__ico" aria-hidden="true" focusable="false"><use href="assets/icons/bicchieri.svg#tumbler"></use></svg>Il rito</a></li>
+        <li><a href="#bar"><svg class="mobile-menu__ico" aria-hidden="true" focusable="false"><use href="assets/icons/bicchieri.svg#highball"></use></svg>Il bar</a></li>
+        <li><a href="#contatti"><svg class="mobile-menu__ico" aria-hidden="true" focusable="false"><use href="assets/icons/bicchieri.svg#calice"></use></svg>Dove siamo</a></li>
       </ol>
     </nav>
-    <p class="mobile-menu__foot">Corso Umberto I, 31 · Civitanova Marche · <span data-open-status>Stasera dalle 17:00</span></p>
+    <div class="mobile-menu__bottom">
+      <svg class="mobile-menu__q" viewBox="0 0 488 476" aria-hidden="true" focusable="false"><use href="assets/brand/logo.svg#q"></use></svg>
+      <p class="mobile-menu__foot">Corso Umberto I, 31 · Civitanova Marche · <span data-open-status>Stasera dalle 17:00</span></p>
+    </div>
   </div>
 
   <main id="main">
@@ -166,19 +169,6 @@
       </div>
     </section>
 
-    <!-- ============ CITAZIONE ============ -->
-    <section class="quote" aria-label="Citazione">
-      <div class="quote__media" data-parallax>
-        <img loading="lazy"
-          src="assets/img/foto-0505b6fe7778.jpg"
-          alt="">
-      </div>
-      <blockquote class="quote__text wrap reveal">
-        <p>«Il ghiaccio è l'ingrediente che nessuno nota, <em>finché non è perfetto.</em>»</p>
-        <footer>— Il nostro capo barman</footer>
-      </blockquote>
-    </section>
-
     <!-- ============ 03 IL RITO ============ -->
     <section class="ritual section" id="rito" aria-labelledby="ritual-title">
       <div class="wrap">
@@ -212,6 +202,19 @@
           </li>
         </ol>
       </div>
+    </section>
+
+    <!-- ============ CITAZIONE ============ -->
+    <section class="quote" aria-label="Citazione">
+      <div class="quote__media" data-parallax>
+        <img loading="lazy"
+          src="assets/img/foto-0505b6fe7778.jpg"
+          alt="">
+      </div>
+      <blockquote class="quote__text wrap reveal">
+        <p>«Il ghiaccio è l'ingrediente che nessuno nota, <em>finché non è perfetto.</em>»</p>
+        <footer>— Il nostro capo barman</footer>
+      </blockquote>
     </section>
 
     <!-- ============ 04 IL BAR ============ -->
@@ -301,13 +304,13 @@
   <footer class="site-footer">
     <div class="wrap site-footer__inner">
       <p class="site-footer__mark" aria-hidden="true"><svg viewBox="0 0 1084 302" focusable="false"><use href="assets/brand/logo.svg#aqua"></use></svg></p>
-      <p class="site-footer__small">© <span data-year>2026</span> Aqua cocktail bar</p>
+      <p class="site-footer__small">© <span data-year>2026</span> Aqua<span class="hide-sm"> cocktail bar</span></p>
       <p class="site-footer__small site-footer__legal"><a href="privacy.html">Privacy</a> · <a href="privacy.html#cookie">Cookie</a> · Bevi responsabilmente.</p>
-      <a class="site-footer__top" href="#top">Torna su ↑</a>
+      <a class="site-footer__top" href="#top" aria-label="Torna su"><span class="hide-sm">Torna su </span>↑</a>
     </div>
   </footer>
 
   <div class="grain" aria-hidden="true"></div>
-  <script src="assets/js/main.js?v=28" defer></script>
+  <script src="assets/js/main.js?v=29" defer></script>
 </body>
 </html>
