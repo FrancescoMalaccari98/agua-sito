@@ -411,10 +411,10 @@ img[data-foto]:not([src]) { visibility: hidden; }
 .info-block { padding-top: 28px; border-top: 1px solid var(--line); font-size: 17px; line-height: 1.6; }
 .info-block__label { font-size: 11px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--brass); margin-bottom: 18px; }
 .hours { width: 100%; border-collapse: collapse; font-size: 15px; }
-.hours th { text-align: left; font-weight: 300; color: var(--stone); padding: 6px 12px 6px 0; }
+/* tutti i giorni uguali: stesso carattere e colore, nessun giorno evidenziato */
+.hours th, .hours td { font-weight: inherit; color: var(--ivory); }
+.hours th { text-align: left; padding: 6px 12px 6px 0; }
 .hours td { text-align: right; padding: 6px 0; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.hours tr.is-today th, .hours tr.is-today td { color: var(--ivory); }
-.hours tr.is-today th::before { content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--brass); margin-right: 10px; vertical-align: middle; }
 .info-link { display: block; width: max-content; padding-block: 3px; transition: color .4s var(--ease); }
 .info-link:hover { color: var(--brass); }
 .info-note { margin-top: 10px; font-size: 14px; color: var(--mute); max-width: 30ch; }
@@ -560,7 +560,6 @@ img[data-foto]:not([src]) { visibility: hidden; }
   .visit__info .hours th, .visit__info .hours td { display: block; padding: 0; text-align: left; }
   /* il lunedì sta su una riga sola: "Lunedì  Chiuso" */
   .visit__info .hours tr[data-days="1"] { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; }
-  .visit__info .hours tr.is-today th::before { margin-right: 6px; }
   .visit__info .info-link { white-space: nowrap; padding-block: 3px; }
   .site-footer { padding-block: 18px; }
   .site-footer__inner { gap: 8px; flex-wrap: wrap; }

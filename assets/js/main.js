@@ -318,8 +318,6 @@
   };
 
   const updateStatus = () => {
-    const { day } = rome();
-    $$('.hours tr').forEach((tr) => tr.classList.toggle('is-today', tr.dataset.days.split(',').map(Number).includes(day)));
     // ciò che annuncia l'inaugurazione (etichetta sulla foto, riga nel menu mobile) sparisce dopo
     $$('[data-only-before-opening]').forEach((el) => { el.hidden = !beforeOpening(); });
     const { open, text } = openStatus();
