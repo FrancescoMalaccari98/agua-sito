@@ -34,8 +34,11 @@
   }
 
   /* ---------- Video dell'hero ----------
-     Parte dalla copertina (il drink finito), entra in dissolvenza, e a fine giro
-     torna a sfumare sulla copertina: così il ritorno all'inizio non si vede. */
+     Parte dalla copertina (il bicchiere vuoto, primo fotogramma), la copertina svanisce
+     quando il video parte e torna a fine giro, prima di ricominciare.
+     Se il browser blocca l'avvio automatico (iPhone con risparmio energetico), la stessa
+     clip viene caricata come immagine: Safari riproduce gli MP4 dentro <img> come una GIF,
+     e le immagini non sono soggette al blocco. */
   const heroVideo = (() => {
     const video = $('.hero__video');
     if (!video) return null;
@@ -56,7 +59,7 @@
     const small = window.matchMedia('(max-width: 640px)').matches;
     const FADE = 0.9;   // secondi di dissolvenza, come la transizione CSS
     const PAUSE = 1400; // ms sulla copertina tra un giro e l'altro
-    let started = false, inView = true, restartTimer = 0;
+    let started = false, inView = true, restartTimer = 0, asImage = false;
 
     video.muted = true;
     video.defaultMuted = true;
@@ -66,17 +69,40 @@
     video.src = `${video.dataset[small ? 'srcSmall' : 'src']}${hevc ? '.hevc' : ''}.mp4`;
     video.preload = 'auto';
 
-    const play = () => {
-      if (!started || !inView || document.hidden || restartTimer) return;
-      const p = video.play();
-      if (p) p.catch(() => {}); // autoplay bloccato (es. risparmio energetico su iPhone): resta la copertina
+    // riserva: la clip come immagine animata (solo Safari la sa riprodurre così)
+    let imageTried = false;
+    const imageFallback = () => {
+      if (imageTried) return;
+      imageTried = true;
+      const img = new Image();
+      img.className = 'hero__video';
+      img.alt = '';
+      img.setAttribute('aria-hidden', 'true');
+      img.onload = () => {
+        if (!img.naturalWidth || !video.paused) return; // nel frattempo il video è partito
+        asImage = true;
+        video.pause();
+        video.replaceWith(img);
+        media.classList.add('is-playing');
+        gestureOff();
+      };
+      // se l'HEVC come immagine non va, si riprova con H.264; altrimenti resta la copertina
+      img.onerror = () => { if (img.src.includes('.hevc.mp4')) img.src = img.src.replace('.hevc.mp4', '.mp4'); };
+      img.src = video.currentSrc || video.src;
     };
-    // su iPhone con risparmio energetico l'avvio automatico è bloccato: parte al primo tocco
+
+    const play = () => {
+      if (asImage || !started || !inView || document.hidden || restartTimer) return;
+      const p = video.play();
+      if (p) p.catch((err) => { if (err && err.name === 'NotAllowedError') imageFallback(); });
+    };
+    // in ogni caso, al primo tocco si riprova con il video vero
     const onGesture = () => { if (video.paused && !video.ended) play(); };
+    const gestureOff = () => ['touchend', 'click'].forEach((ev) => document.removeEventListener(ev, onGesture));
     ['touchend', 'click'].forEach((ev) => document.addEventListener(ev, onGesture, { passive: true }));
     video.addEventListener('playing', () => {
       media.classList.add('is-playing');
-      ['touchend', 'click'].forEach((ev) => document.removeEventListener(ev, onGesture));
+      gestureOff();
     });
     video.addEventListener('timeupdate', () => {
       if (video.duration && video.currentTime > video.duration - FADE - 0.3) media.classList.remove('is-playing');
@@ -96,9 +122,10 @@
 
     new IntersectionObserver(([en]) => {
       inView = en.isIntersecting;
+      if (asImage) return;
       if (inView) play(); else video.pause();
     }).observe(hero);
-    document.addEventListener('visibilitychange', () => (document.hidden ? video.pause() : play()));
+    document.addEventListener('visibilitychange', () => { if (!asImage) (document.hidden ? video.pause() : play()); });
 
     return { start() { started = true; play(); } };
   })();
