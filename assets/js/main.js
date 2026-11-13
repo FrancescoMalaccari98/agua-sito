@@ -31,7 +31,7 @@
   $$('[data-hero-step]', hero).forEach((el, i) => el.style.setProperty('--i', i));
   const startHero = () => setTimeout(() => {
     hero.classList.add('is-loaded');
-    if (heroVideo) setTimeout(heroVideo.start, 900);
+    if (heroVideo) setTimeout(heroVideo.start, 250);
   }, 30);
 
   const intro = $('.intro');
@@ -81,7 +81,10 @@
     // HEVC: stessa qualità con circa il 30% di peso in meno (Safari, Chrome su Mac, iPhone);
     // altrimenti H.264, che va ovunque
     const hevc = video.canPlayType('video/mp4; codecs="hvc1.1.6.L123.B0"') !== '';
-    video.src = `${video.dataset[small ? 'srcSmall' : 'src']}${hevc ? '.hevc' : ''}.mp4`;
+    // ?v= cambia quando si sostituisce il video, così nessuno vede la copia vecchia in memoria
+    video.src = `${video.dataset[small ? 'srcSmall' : 'src']}${hevc ? '.hevc' : ''}.mp4?v=2`;
+    // il video inizia a scaricarsi subito, così parte appena la pagina è pronta
+    video.preload = 'auto';
     video.preload = 'auto';
 
     // riserva: la clip come immagine animata (solo Safari la sa riprodurre così)
