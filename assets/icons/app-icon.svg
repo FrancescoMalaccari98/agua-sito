@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Home-screen icon source (iPhone / Android): brass Q on a full-bleed dark square.
+  <!-- Home-screen icon source (iPhone / Android): white Q (the site ivory) on a full-bleed dark square.
        The Q stays inside the central safe zone, so Android can crop it to a circle.
        The PNG files next to this one are rendered from it. -->
   <rect width="512" height="512" fill="#0E1514"/>
-  <g fill="#B89A5E" transform="translate(105.06 112.1) scale(0.594)"><path d="M91.47,57.81 A211.0,233.0 0 0 1 402.40,362.65 L353.73,314.93 A146.5,166.0 0 0 0 138.77,104.18 Z"/><path d="M38.46,127.02 A211.0,233.0 0 0 0 346.44,428.96 L298.68,382.14 A146.5,166.0 0 0 1 87.98,175.57 Z"/><path d="M79.60,69.99 L493.73,476.00 L418.71,476.00 L42.83,107.49 Z"/></g>
+  <g fill="#EDE6D8" transform="translate(105.06 112.1) scale(0.594)"><path d="M91.47,57.81 A211.0,233.0 0 0 1 402.40,362.65 L353.73,314.93 A146.5,166.0 0 0 0 138.77,104.18 Z"/><path d="M38.46,127.02 A211.0,233.0 0 0 0 346.44,428.96 L298.68,382.14 A146.5,166.0 0 0 1 87.98,175.57 Z"/><path d="M79.60,69.99 L493.73,476.00 L418.71,476.00 L42.83,107.49 Z"/></g>
 </svg>
