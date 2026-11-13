@@ -6,6 +6,26 @@
   const root = document.documentElement;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- Foto: i percorsi arrivano da data/foto.properties ----------
+     Ogni <img> (o <source>) con data-foto="chiave" prende "chiave.foto" e "chiave.alt";
+     data-foto-variante="mobile" prende "chiave.foto.mobile". */
+  let foto = null;         // il contenuto del file, quando è arrivato
+  let heroFinale = false;  // senza video la copertina dell'hero mostra il drink finito
+  const applyFoto = () => {
+    if (!foto) return;
+    $$('[data-foto]').forEach((el) => {
+      const base = el.dataset.foto;
+      const variante = el.dataset.fotoVariante;
+      const key = (...parts) => [`${base}.foto`, ...parts].filter(Boolean).join('.');
+      const path = (heroFinale && base === 'hero' && foto.get(key('finale', variante))) || foto.get(key(variante));
+      if (path) el.setAttribute(el.tagName === 'SOURCE' ? 'srcset' : 'src', path);
+      if (el.tagName === 'IMG' && foto.has(`${base}.alt`)) el.alt = foto.get(`${base}.alt`);
+    });
+  };
+  window.AquaProps.load('data/foto.properties')
+    .then((p) => { foto = p; applyFoto(); })
+    .catch(() => {});
+
   /* ---------- Intro + ingresso hero ---------- */
   const hero = $('.hero');
   $$('[data-hero-step]', hero).forEach((el, i) => el.style.setProperty('--i', i));
@@ -29,7 +49,7 @@
   } else {
     root.classList.remove('has-intro');
     const heroImg = $('.hero__media img');
-    if (heroImg.complete) startHero();
+    if (heroImg.getAttribute('src') && heroImg.complete) startHero();
     else { heroImg.addEventListener('load', startHero, { once: true }); setTimeout(startHero, 1200); }
   }
 
@@ -44,12 +64,7 @@
     if (!video) return null;
     const media = $('.hero__media');
     // senza video la copertina mostra il drink finito invece del bicchiere vuoto
-    const stillFull = () => {
-      $$('picture source, picture img', media).forEach((el) => {
-        const attr = el.tagName === 'IMG' ? 'src' : 'srcset';
-        el.setAttribute(attr, el.getAttribute(attr).replace(/\.jpg$/, '-fine.jpg'));
-      });
-    };
+    const stillFull = () => { heroFinale = true; applyFoto(); };
     const conn = navigator.connection;
     if (reduceMotion || (conn && conn.saveData) || !video.canPlayType('video/mp4')) {
       video.remove();

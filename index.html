@@ -10,6 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Aqua — Cocktail bar">
   <meta property="og:description" content="Miscelazione d'autore, ghiaccio tagliato a mano e il tempo giusto per goderseli.">
+  <!-- Anteprima per WhatsApp/Facebook: i social non leggono data/foto.properties, il percorso resta scritto qui -->
   <meta property="og:image" content="https://francescomalaccari98.github.io/aqua-sito/assets/img/hero-calice-1920.jpg">
   <meta property="og:locale" content="it_IT">
   <script>
@@ -25,7 +26,7 @@
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/fonts.css?v=26">
-  <link rel="stylesheet" href="assets/css/style.css?v=27">
+  <link rel="stylesheet" href="assets/css/style.css?v=28">
 </head>
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
@@ -86,11 +87,10 @@
     <!-- ============ HERO ============ -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__media">
-        <!-- Fotogramma finale del video: è la copertina e ciò che resta senza animazioni -->
+        <!-- Copertina del video. Tutte le foto del sito si scelgono in data/foto.properties -->
         <picture>
-          <source media="(max-width: 640px)" srcset="assets/img/hero-calice-1080.jpg" width="1080" height="1350">
-          <img class="hero__still" src="assets/img/hero-calice-1920.jpg" width="1920" height="1440"
-            alt="Un calice di cristallo pieno di un drink rosso, su un tagliere di legno, con una fragola accanto" fetchpriority="high">
+          <source media="(max-width: 640px)" data-foto="hero" data-foto-variante="mobile" width="1080" height="1350">
+          <img class="hero__still" data-foto="hero" width="1920" height="1440" alt="" fetchpriority="high">
         </picture>
         <!-- Video (Pexels 8449557, licenza Pexels): il file lo sceglie main.js in base allo schermo.
              Il video precedente è in assets/backup/video-5230368. -->
@@ -160,9 +160,7 @@
 
         <figure class="philosophy__figure reveal">
           <div class="frame">
-            <img loading="lazy"
-              src="assets/img/foto-3bc16c4c7d1b.jpg"
-              alt="Cocktail ambrato con agrumi e rosmarino su un bancone scuro" width="900" height="1125">
+            <img loading="lazy" data-foto="filosofia" alt="" width="900" height="1125">
           </div>
           <figcaption>Old Fashioned affumicato al legno di ciliegio</figcaption>
         </figure>
@@ -184,19 +182,19 @@
         <ol class="ritual__steps">
           <li class="step reveal">
             <span class="step__num" aria-hidden="true">I</span>
-            <div class="frame"><img loading="lazy" src="assets/img/foto-c7306c1976bc.jpg" alt="Bicchiere colmo di ghiaccio limpido con fetta di lime"></div>
+            <div class="frame"><img loading="lazy" data-foto="rito.ghiaccio" alt=""></div>
             <h3 class="step__title">Il ghiaccio</h3>
             <p class="step__text">Blocchi limpidi congelati lentamente per quarantotto ore, poi tagliati a mano al momento. Si scioglie piano e non annacqua.</p>
           </li>
           <li class="step reveal">
             <span class="step__num" aria-hidden="true">II</span>
-            <div class="frame"><img loading="lazy" src="assets/img/foto-2133bbeb6ce5.jpg" alt="Jigger in ottone e strumenti da bar sul bancone"></div>
+            <div class="frame"><img loading="lazy" data-foto="rito.misura" alt=""></div>
             <h3 class="step__title">La misura</h3>
             <p class="step__text">Ogni ingrediente pesato al grammo, ogni mescolata contata. La precisione è ciò che rende un classico, classico.</p>
           </li>
           <li class="step reveal">
             <span class="step__num" aria-hidden="true">III</span>
-            <div class="frame"><img loading="lazy" src="assets/img/foto-cb7f31384c19.jpg" alt="Coppa da cocktail dorata su fondo nero"></div>
+            <div class="frame"><img loading="lazy" data-foto="rito.servizio" alt=""></div>
             <h3 class="step__title">Il servizio</h3>
             <p class="step__text">Vetro raffreddato, una guarnizione sola, servito al bancone con il racconto di ciò che state per bere.</p>
           </li>
@@ -207,9 +205,7 @@
     <!-- ============ CITAZIONE ============ -->
     <section class="quote" aria-label="Citazione">
       <div class="quote__media" data-parallax>
-        <img loading="lazy"
-          src="assets/img/foto-0505b6fe7778.jpg"
-          alt="">
+        <img loading="lazy" data-foto="citazione" alt="">
       </div>
       <blockquote class="quote__text wrap reveal">
         <p>«Il ghiaccio è l'ingrediente che nessuno nota, <em>finché non è perfetto.</em>»</p>
@@ -231,15 +227,15 @@
 
         <div class="gallery">
           <figure class="gallery__item gallery__item--a reveal">
-            <div class="frame"><img loading="lazy" src="assets/img/foto-31de0f17cc34.jpg" alt="Bancone illuminato da lampadine calde con sgabelli in fila"></div>
+            <div class="frame"><img loading="lazy" data-foto="bar.bancone" alt=""></div>
             <figcaption><span>I.</span> Il bancone</figcaption>
           </figure>
           <figure class="gallery__item gallery__item--b reveal">
-            <div class="frame"><img loading="lazy" src="assets/img/foto-d5b75f20ff7a.jpg" alt="Bottiglie di distillati allineate su una mensola"></div>
+            <div class="frame"><img loading="lazy" data-foto="bar.bottigliera" alt=""></div>
             <figcaption><span>II.</span> La bottigliera</figcaption>
           </figure>
           <figure class="gallery__item gallery__item--c reveal">
-            <div class="frame"><img loading="lazy" src="assets/img/foto-edc43d0e7129.jpg" alt="Retrobanco in legno scuro con bottiglie illuminate"></div>
+            <div class="frame"><img loading="lazy" data-foto="bar.retrobanco" alt=""></div>
             <figcaption><span>III.</span> Il retrobanco</figcaption>
           </figure>
         </div>
@@ -265,7 +261,7 @@
           </div>
 
           <figure class="visit__figure reveal">
-            <div class="frame"><img loading="lazy" src="assets/img/foto-9710e4a00a20.jpg" alt="Sala del bar con luci calde e scaffali di bottiglie"></div>
+            <div class="frame"><img loading="lazy" data-foto="dove-siamo" alt=""></div>
             <div class="visit__badge">
               <span class="status"><span class="status__dot" aria-hidden="true"></span><span data-open-status>Stasera dalle 17:00</span></span>
             </div>
@@ -311,6 +307,7 @@
   </footer>
 
   <div class="grain" aria-hidden="true"></div>
-  <script src="assets/js/main.js?v=29" defer></script>
+  <script src="assets/js/properties.js?v=1" defer></script>
+  <script src="assets/js/main.js?v=30" defer></script>
 </body>
 </html>

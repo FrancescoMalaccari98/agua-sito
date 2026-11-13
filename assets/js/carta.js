@@ -1,32 +1,12 @@
 /* Aqua — lettura della carta da data/menu.properties
-   Usato dalla home (sezione "La carta") e dalla pagina carta.html.
+   Usato dalla pagina carta.html.
    Per cambiare il menu si modifica solo il file .properties. */
 (() => {
   const SOURCE = 'data/menu.properties';
   const ICONS = 'assets/icons/bicchieri.svg';
 
-  /* ---------- Parser del formato .properties ----------
-     chiave = valore (anche chiave: valore), commenti con # o !,
-     righe lunghe spezzate con \ a fine riga, sequenze \uXXXX. */
-  const parse = (text) => {
-    const props = new Map();
-    const lines = text.replace(/^﻿/, '').split(/\r?\n/);
-    for (let i = 0; i < lines.length; i++) {
-      let line = lines[i].replace(/^\s+/, '');
-      if (!line || line[0] === '#' || line[0] === '!') continue;
-      while (/(^|[^\\])(\\\\)*\\$/.test(line) && i + 1 < lines.length) {
-        line = line.slice(0, -1) + lines[++i].replace(/^\s+/, '');
-      }
-      const m = line.match(/^((?:\\.|[^=:\s\\])+)\s*[=:]?\s*(.*)$/);
-      if (!m) continue;
-      const unescape = (s) => s
-        .replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
-        .replace(/\\([tnrf])/g, (_, c) => ({ t: '\t', n: '\n', r: '\r', f: '\f' })[c])
-        .replace(/\\(.)/g, '$1');
-      props.set(unescape(m[1]), unescape(m[2]).trim());
-    }
-    return props;
-  };
+  // il parser dei file .properties è in assets/js/properties.js
+  const { parse } = window.AquaProps;
 
   /* ---------- Dal file al modello della carta ---------- */
   const build = (props) => {
@@ -71,9 +51,7 @@
   let cache;
   const load = () => {
     if (!cache) {
-      cache = fetch(SOURCE, { cache: 'no-cache' })
-        .then((r) => { if (!r.ok) throw new Error(`menu ${r.status}`); return r.text(); })
-        .then((t) => build(parse(t)));
+      cache = window.AquaProps.load(SOURCE).then(build);
     }
     return cache;
   };
