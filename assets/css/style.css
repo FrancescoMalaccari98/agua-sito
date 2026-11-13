@@ -349,7 +349,7 @@ img[data-foto]:not([src]) { visibility: hidden; }
 .quote__text footer { margin-top: 32px; font-size: 11px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--brass); }
 
 /* ---------- Il bar ---------- */
-.space__head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: 16px 64px; align-items: end; }
+.space__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 16px 64px; align-items: end; }
 .space__head .section-index { grid-column: 1 / -1; margin-bottom: 0; }
 .space__head .display { max-width: 18ch; }
 
@@ -360,9 +360,11 @@ img[data-foto]:not([src]) { visibility: hidden; }
 .gallery__item:hover img, .philosophy__figure:hover img { transform: scale(1.04); filter: saturate(1); }
 
 /* ---------- Il rito ---------- */
-.ritual__head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: 16px 64px; align-items: end; }
+.ritual__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 16px 64px; align-items: end; }
 .ritual__head .section-index { grid-column: 1 / -1; margin-bottom: 0; }
 .ritual__head .display { max-width: 14ch; }
+/* la descrizione parte dal centro della pagina, vicino al titolo */
+.ritual__head .lead, .space__head .lead { max-width: 52ch; }
 .ritual { --step-num: clamp(64px, 6.4vw, 104px); }
 .ritual__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); margin-top: calc(var(--step-num) * .48 + 18px); }
 .step { position: relative; }
