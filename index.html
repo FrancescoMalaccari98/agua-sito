@@ -7,12 +7,46 @@
   <meta name="description" content="Aqua, cocktail bar a Civitanova Marche. Miscelazione d'autore, ghiaccio tagliato a mano e il tempo giusto per goderseli.">
   <meta name="theme-color" content="#0E1514">
   <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Aqua — Cocktail bar">
   <meta property="og:description" content="Miscelazione d'autore, ghiaccio tagliato a mano e il tempo giusto per goderseli.">
-  <!-- Link preview for WhatsApp/Facebook: social crawlers do not read data/foto.properties, so the path is written here -->
+  <!-- Link preview for WhatsApp/Facebook: social crawlers do not read data/foto.properties, so the path is written here.
+       When the site moves to its own domain, replace https://francescomalaccari98.github.io/aqua-sito/ everywhere. -->
   <meta property="og:image" content="https://francescomalaccari98.github.io/aqua-sito/assets/img/hero-calice-1920.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1440">
+  <meta property="og:url" content="https://francescomalaccari98.github.io/aqua-sito/">
+  <meta property="og:site_name" content="Aqua cocktail bar">
   <meta property="og:locale" content="it_IT">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://francescomalaccari98.github.io/aqua-sito/">
+  <!-- Structured data for Google (schema.org BarOrPub). Add "telephone" once the real number is known. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BarOrPub",
+    "name": "Aqua cocktail bar",
+    "url": "https://francescomalaccari98.github.io/aqua-sito/",
+    "image": "https://francescomalaccari98.github.io/aqua-sito/assets/img/hero-calice-1920.jpg",
+    "description": "Cocktail bar a Civitanova Marche.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Corso Umberto I, 31",
+      "postalCode": "62012",
+      "addressLocality": "Civitanova Marche",
+      "addressRegion": "MC",
+      "addressCountry": "IT"
+    },
+    "acceptsReservations": true,
+    "hasMenu": "https://francescomalaccari98.github.io/aqua-sito/carta.html",
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "17:00", "closes": "22:00", "validFrom": "2026-11-26" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "22:00", "closes": "02:00", "validFrom": "2026-11-26" }
+    ]
+  }
+  </script>
   <script>
     document.documentElement.classList.add('js');
     // The site always opens at the top, even if the address still contains a #section
@@ -26,7 +60,7 @@
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/fonts.css?v=27">
-  <link rel="stylesheet" href="assets/css/style.css?v=39">
+  <link rel="stylesheet" href="assets/css/style.css?v=40">
 </head>
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
@@ -93,7 +127,7 @@
           <img class="hero__still" data-foto="hero" width="1920" height="1440" alt="" fetchpriority="high">
         </picture>
         <!-- Video (Pexels 8449557, Pexels licence): the files are chosen in data/foto.properties (hero.video…).
-             The previous video is kept in assets/backup/video-5230368. -->
+             The previous video (Pexels 5230368) can be restored from git history, e.g. commit 5d4102d. -->
         <video class="hero__video" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
       </div>
 

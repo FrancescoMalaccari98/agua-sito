@@ -1,0 +1,7 @@
+# Rules for search engines: every page may be indexed.
+# Note: crawlers only read robots.txt at the root of a domain, so this file takes effect
+# once the site moves to its own domain. Update the sitemap URL below at that point.
+User-agent: *
+Allow: /
+
+Sitemap: https://francescomalaccari98.github.io/aqua-sito/sitemap.xml

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pagina non trovata — Aqua</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0E1514">
+  <script>
+    // GitHub Pages serves this page for any missing URL, at any depth (e.g. /aqua-sito/a/b).
+    // Point every relative link to the site root: /aqua-sito/ on github.io, / on a custom domain.
+    (function () {
+      var root = location.pathname.indexOf('/aqua-sito/') === 0 ? '/aqua-sito/' : '/';
+      var base = document.createElement('base');
+      base.href = root;
+      document.head.appendChild(base);
+    })();
+  </script>
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/fonts.css?v=27">
+  <link rel="stylesheet" href="assets/css/style.css?v=40">
+</head>
+<body class="notfound-page">
+  <!-- No skip link here: with the <base> above, "#…" links would point to the home page -->
+
+  <header class="legal-top">
+    <div class="wrap legal-top__inner">
+      <a class="wordmark" href="./" aria-label="Aqua, vai al sito"><svg class="logo" viewBox="0 0 1084 302" aria-hidden="true" focusable="false"><use href="assets/brand/logo.svg#aqua"></use></svg></a>
+      <a class="link-arrow" href="./">Il sito <span aria-hidden="true">→</span></a>
+    </div>
+  </header>
+
+  <!-- ============ 404: page not found ============ -->
+  <main id="contenuto" class="notfound wrap">
+    <p class="notfound__code" aria-hidden="true">404</p>
+    <p class="eyebrow">Pagina non trovata</p>
+    <h1 class="display">Qui non <em>si beve.</em></h1>
+    <p class="lead">La pagina che cercate non esiste o è stata spostata. Il bancone, però, è sempre al suo posto.</p>
+    <div class="notfound__actions">
+      <a class="btn btn--solid" href="./">Torna alla home</a>
+      <a class="link-arrow" href="carta.html">Guarda la carta <span aria-hidden="true">→</span></a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <p class="site-footer__mark" aria-hidden="true"><svg viewBox="0 0 1084 302" focusable="false"><use href="assets/brand/logo.svg#aqua"></use></svg></p>
+      <p class="site-footer__small">© 2026 Aqua<span class="hide-sm"> cocktail bar</span></p>
+      <p class="site-footer__small site-footer__legal"><a href="privacy.html#privacy">Privacy</a> · <a href="privacy.html#cookie">Cookie</a></p>
+    </div>
+  </footer>
+</body>
+</html>

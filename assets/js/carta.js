@@ -30,7 +30,6 @@
           prezzo: f('prezzo'),
           bottiglia: f('prezzo.bottiglia'),
           bicchiere: f('bicchiere').toLowerCase(),
-          foto: f('foto'),
         };
       }).filter((v) => v.nome);
       return {
@@ -72,7 +71,7 @@
     : '<span class="drink__price"></span>');
 
   const drink = (model, v) => `
-    <li class="drink"${v.foto ? ` data-img="${esc(v.foto)}"` : ''}${v.bicchiere ? ` data-glass="${esc(v.bicchiere)}"` : ''}>
+    <li class="drink"${v.bicchiere ? ` data-glass="${esc(v.bicchiere)}"` : ''}>
       ${glass(model, v.bicchiere, 'drink__glass')}
       <span class="drink__name">${esc(v.nome)}</span><span class="drink__leader" aria-hidden="true"></span>${price(model, v)}
       ${v.ingredienti ? `<span class="drink__notes">${esc(v.ingredienti)}</span>` : ''}
