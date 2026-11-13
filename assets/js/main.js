@@ -22,9 +22,9 @@
       if (el.tagName === 'IMG' && foto.has(`${base}.alt`)) el.alt = foto.get(`${base}.alt`);
     });
   };
-  window.AquaProps.load('data/foto.properties')
-    .then((p) => { foto = p; applyFoto(); })
-    .catch(() => {});
+  const fotoReady = window.AquaProps.load('data/foto.properties')
+    .then((p) => { foto = p; applyFoto(); return p; })
+    .catch(() => null);
 
   /* ---------- Intro + ingresso hero ---------- */
   const hero = $('.hero');
@@ -81,11 +81,18 @@
     // HEVC: stessa qualità con circa il 30% di peso in meno (Safari, Chrome su Mac, iPhone);
     // altrimenti H.264, che va ovunque
     const hevc = video.canPlayType('video/mp4; codecs="hvc1.1.6.L123.B0"') !== '';
-    // ?v= cambia quando si sostituisce il video, così nessuno vede la copia vecchia in memoria
-    video.src = `${video.dataset[small ? 'srcSmall' : 'src']}${hevc ? '.hevc' : ''}.mp4?v=2`;
-    // il video inizia a scaricarsi subito, così parte appena la pagina è pronta
-    video.preload = 'auto';
-    video.preload = 'auto';
+    // i file arrivano da data/foto.properties (hero.video…): prima l'HEVC, poi l'H.264 di riserva
+    let sources = [];
+    let h264 = '';
+    fotoReady.then((p) => {
+      const key = small ? 'hero.video.mobile' : 'hero.video';
+      h264 = (p && p.get(key)) || '';
+      sources = [hevc && p && p.get(`${key}.hevc`), h264].filter(Boolean);
+      if (!sources.length) { video.remove(); stillFull(); return; }
+      video.src = sources.shift();
+      video.preload = 'auto'; // inizia a scaricarsi subito, così parte appena la pagina è pronta
+      play();
+    });
 
     // riserva: la clip come immagine animata (solo Safari la sa riprodurre così)
     let imageTried = false;
@@ -105,12 +112,13 @@
         gestureOff();
       };
       // se l'HEVC come immagine non va, si riprova con H.264; altrimenti resta la copertina
-      img.onerror = () => { if (img.src.includes('.hevc.mp4')) img.src = img.src.replace('.hevc.mp4', '.mp4'); };
+      let retried = false;
+      img.onerror = () => { if (!retried && h264) { retried = true; img.src = h264; } };
       img.src = video.currentSrc || video.src;
     };
 
     const play = () => {
-      if (asImage || !started || !inView || document.hidden || restartTimer) return;
+      if (asImage || !started || !inView || document.hidden || restartTimer || !video.getAttribute('src')) return;
       const p = video.play();
       if (p) p.catch((err) => { if (err && err.name === 'NotAllowedError') imageFallback(); });
     };
@@ -134,7 +142,7 @@
     });
     video.addEventListener('error', () => {
       // se l'HEVC dichiarato non si decodifica, si riprova una volta con H.264
-      if (video.src.includes('.hevc.mp4')) { video.src = video.src.replace('.hevc.mp4', '.mp4'); play(); }
+      if (sources.length) { video.src = sources.shift(); play(); }
       else { video.remove(); media.classList.remove('is-playing'); stillFull(); }
     });
 

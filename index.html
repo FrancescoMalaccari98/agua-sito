@@ -26,7 +26,7 @@
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/fonts.css?v=26">
-  <link rel="stylesheet" href="assets/css/style.css?v=28">
+  <link rel="stylesheet" href="assets/css/style.css?v=29">
 </head>
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
@@ -92,10 +92,9 @@
           <source media="(max-width: 640px)" data-foto="hero" data-foto-variante="mobile" width="1080" height="1350">
           <img class="hero__still" data-foto="hero" width="1920" height="1440" alt="" fetchpriority="high">
         </picture>
-        <!-- Video (Pexels 8449557, licenza Pexels): il file lo sceglie main.js in base allo schermo.
+        <!-- Video (Pexels 8449557, licenza Pexels): i file si scelgono in data/foto.properties (hero.video…).
              Il video precedente è in assets/backup/video-5230368. -->
-        <video class="hero__video" muted playsinline preload="none" aria-hidden="true" tabindex="-1"
-          data-src="assets/video/aqua-calice-1920" data-src-small="assets/video/aqua-calice-1080"></video>
+        <video class="hero__video" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
       </div>
 
       <div class="hero__content wrap">
@@ -254,7 +253,7 @@
             <h2 class="display reveal" id="visit-title">Vi aspettiamo <em>al bancone.</em></h2>
             <p class="lead reveal">Niente prenotazioni: i posti si assegnano in ordine di arrivo. Il momento più tranquillo è subito dopo l'apertura.</p>
 
-            <a class="address-link reveal" href="https://www.google.com/maps/search/?api=1&amp;query=Corso+Umberto+I+31%2C+62012+Civitanova+Marche+MC" target="_blank" rel="noopener">
+            <a class="address-link reveal" href="https://www.google.com/maps/search/?api=1&amp;query=Corso+Umberto+I+31%2C+62012+Civitanova+Marche+MC" target="_blank" rel="noopener noreferrer">
               <span class="address-link__text">Corso Umberto I, 31</span>
               <span class="address-link__sub">62012 Civitanova Marche (MC) · Indicazioni <span aria-hidden="true">↗</span></span>
             </a>
@@ -273,9 +272,9 @@
             <h3 class="info-block__label">Orari</h3>
             <table class="hours">
               <tbody>
-                <tr data-days="1"><th scope="row">Lunedì</th><td>Chiuso</td></tr>
-                <tr data-days="2,3,4,5"><th scope="row">Martedì — Venerdì</th><td>17:00 — 22:00</td></tr>
-                <tr data-days="6,0"><th scope="row">Sabato — Domenica</th><td>22:00 — 02:00</td></tr>
+                <tr data-days="1"><th scope="row"><span class="hide-sm">Lunedì</span><span class="show-sm">Lun</span></th><td>Chiuso</td></tr>
+                <tr data-days="2,3,4,5"><th scope="row"><span class="hide-sm">Martedì — Venerdì</span><span class="show-sm">Mar — Ven</span></th><td>17:00 — 22:00</td></tr>
+                <tr data-days="6,0"><th scope="row"><span class="hide-sm">Sabato — Domenica</span><span class="show-sm">Sab — Dom</span></th><td>22:00 — 02:00</td></tr>
               </tbody>
             </table>
           </div>
@@ -288,7 +287,7 @@
 
           <div class="info-block reveal">
             <h3 class="info-block__label">Seguiteci</h3>
-            <a class="info-link" href="https://instagram.com/" target="_blank" rel="noopener">Instagram ↗</a>
+            <a class="info-link" href="https://instagram.com/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
             <p class="info-note">Il fuori menu della settimana lo annunciamo lì, ogni martedì.</p>
           </div>
         </div>
@@ -308,6 +307,6 @@
 
   <div class="grain" aria-hidden="true"></div>
   <script src="assets/js/properties.js?v=1" defer></script>
-  <script src="assets/js/main.js?v=31" defer></script>
+  <script src="assets/js/main.js?v=32" defer></script>
 </body>
 </html>
