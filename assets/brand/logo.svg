@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg">
-  <!-- Logo Aqua. "aqua" = parola intera, "q" = solo il simbolo. Il colore segue currentColor. -->
+  <!-- Aqua logo. "aqua" = full wordmark, "q" = the symbol only. The colour follows currentColor. -->
   <symbol id="aqua" viewBox="146 308 1084 302">
     <path fill-rule="evenodd" d="M150,591 L279,314 L408,591 L368,591 L336,521 L222,521 L190,591 Z M279,394 L321,491 L237,491 Z"/>
     <g transform="translate(428.54 316.94) scale(0.594)"><path d="M91.47,57.81 A211.0,233.0 0 0 1 402.40,362.65 L353.73,314.93 A146.5,166.0 0 0 0 138.77,104.18 Z"/><path d="M38.46,127.02 A211.0,233.0 0 0 0 346.44,428.96 L298.68,382.14 A146.5,166.0 0 0 1 87.98,175.57 Z"/><path d="M79.60,69.99 L493.73,476.00 L418.71,476.00 L42.83,107.49 Z"/></g>

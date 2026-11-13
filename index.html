@@ -10,12 +10,12 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Aqua — Cocktail bar">
   <meta property="og:description" content="Miscelazione d'autore, ghiaccio tagliato a mano e il tempo giusto per goderseli.">
-  <!-- Anteprima per WhatsApp/Facebook: i social non leggono data/foto.properties, il percorso resta scritto qui -->
+  <!-- Link preview for WhatsApp/Facebook: social crawlers do not read data/foto.properties, so the path is written here -->
   <meta property="og:image" content="https://francescomalaccari98.github.io/aqua-sito/assets/img/hero-calice-1920.jpg">
   <meta property="og:locale" content="it_IT">
   <script>
     document.documentElement.classList.add('js');
-    // il sito si apre sempre dall'inizio, anche se nell'indirizzo è rimasto un #sezione
+    // The site always opens at the top, even if the address still contains a #section
     try {
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
       if (location.hash) history.replaceState(null, '', location.pathname + location.search);
@@ -25,15 +25,15 @@
   </script>
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/fonts.css?v=26">
-  <link rel="stylesheet" href="assets/css/style.css?v=38">
+  <link rel="stylesheet" href="assets/css/fonts.css?v=27">
+  <link rel="stylesheet" href="assets/css/style.css?v=39">
 </head>
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
 
-  <!-- ============ INTRO (solo alla prima visita della sessione) ============ -->
+  <!-- ============ INTRO (only on the first visit of the browser session) ============ -->
   <div class="intro" aria-hidden="true">
-    <!-- Prima la Q del logo, poi la parola si apre: "A" a sinistra, "UA" a destra -->
+    <!-- First the logo Q, then the word opens up: "A" on the left, "UA" on the right -->
     <svg class="intro__logo" viewBox="146 308 1084 302" focusable="false">
       <g class="intro__word">
         <path class="intro__a" fill-rule="evenodd" d="M150,591 L279,314 L408,591 L368,591 L336,521 L222,521 L190,591 Z M279,394 L321,491 L237,491 Z"/>
@@ -87,13 +87,13 @@
     <!-- ============ HERO ============ -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__media">
-        <!-- Copertina del video. Tutte le foto del sito si scelgono in data/foto.properties -->
+        <!-- Video cover image. Every photo on the site is chosen in data/foto.properties -->
         <picture>
           <source media="(max-width: 640px)" data-foto="hero" data-foto-variante="mobile" width="1080" height="1350">
           <img class="hero__still" data-foto="hero" width="1920" height="1440" alt="" fetchpriority="high">
         </picture>
-        <!-- Video (Pexels 8449557, licenza Pexels): i file si scelgono in data/foto.properties (hero.video…).
-             Il video precedente è in assets/backup/video-5230368. -->
+        <!-- Video (Pexels 8449557, Pexels licence): the files are chosen in data/foto.properties (hero.video…).
+             The previous video is kept in assets/backup/video-5230368. -->
         <video class="hero__video" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
       </div>
 
@@ -111,7 +111,7 @@
       </div>
 
       <div class="hero__meta wrap" data-hero-step>
-        <!-- Conto alla rovescia: sparisce da solo all'ora dell'inaugurazione -->
+        <!-- Countdown: hides itself at the opening time and is replaced by the open/closed status -->
         <div class="countdown" data-countdown="2026-11-26T19:00:00+01:00">
           <p class="countdown__label">
             <span class="status__dot" aria-hidden="true"></span>
@@ -133,7 +133,7 @@
       </div>
     </section>
 
-    <!-- ============ 01 FILOSOFIA ============ -->
+    <!-- ============ 01 PHILOSOPHY ============ -->
     <section class="philosophy section" id="filosofia" aria-labelledby="philo-title">
       <div class="wrap philosophy__grid">
         <div class="section-index reveal">
@@ -166,7 +166,7 @@
       </div>
     </section>
 
-    <!-- ============ 03 IL RITO ============ -->
+    <!-- ============ 02 THE RITUAL ============ -->
     <section class="ritual section" id="rito" aria-labelledby="ritual-title">
       <div class="wrap">
         <div class="ritual__head">
@@ -201,7 +201,7 @@
       </div>
     </section>
 
-    <!-- ============ CITAZIONE ============ -->
+    <!-- ============ QUOTE ============ -->
     <section class="quote" aria-label="Citazione">
       <div class="quote__media" data-parallax>
         <img loading="lazy" data-foto="citazione" alt="">
@@ -212,7 +212,7 @@
       </blockquote>
     </section>
 
-    <!-- ============ 04 IL BAR ============ -->
+    <!-- ============ 03 THE BAR ============ -->
     <section class="space section" id="bar" aria-labelledby="space-title">
       <div class="wrap">
         <div class="space__head">
@@ -241,7 +241,7 @@
       </div>
     </section>
 
-    <!-- ============ 05 DOVE SIAMO ============ -->
+    <!-- ============ 04 WHERE WE ARE (address, hours, contacts) ============ -->
     <section class="visit section" id="contatti" aria-labelledby="visit-title">
       <div class="wrap">
         <div class="visit__grid">
@@ -305,7 +305,7 @@
   </footer>
 
   <div class="grain" aria-hidden="true"></div>
-  <script src="assets/js/properties.js?v=1" defer></script>
-  <script src="assets/js/main.js?v=36" defer></script>
+  <script src="assets/js/properties.js?v=2" defer></script>
+  <script src="assets/js/main.js?v=37" defer></script>
 </body>
 </html>

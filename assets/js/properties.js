@@ -1,6 +1,6 @@
-/* Aqua — lettura dei file .properties (data/menu.properties, data/foto.properties)
-   chiave = valore (anche chiave: valore), commenti con # o !,
-   righe lunghe spezzate con \ a fine riga, sequenze \uXXXX. */
+/* Aqua — reader for .properties files (data/menu.properties, data/foto.properties)
+   Supports: key = value (or key: value), comments starting with # or !,
+   long lines continued with a trailing \, and \uXXXX escape sequences. */
 (() => {
   const parse = (text) => {
     const props = new Map();
@@ -22,7 +22,7 @@
     return props;
   };
 
-  // scarica un file .properties; ogni file viene letto una volta sola per pagina
+  // Downloads a .properties file; each file is fetched only once per page
   const cache = {};
   const load = (url) => {
     if (!cache[url]) {

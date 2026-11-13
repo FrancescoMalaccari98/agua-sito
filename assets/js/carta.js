@@ -1,14 +1,14 @@
-/* Aqua — lettura della carta da data/menu.properties
-   Usato dalla pagina carta.html.
-   Per cambiare il menu si modifica solo il file .properties. */
+/* Aqua — drinks menu built from data/menu.properties
+   Used by carta.html (the page linked by the QR code).
+   To change the menu, edit only the .properties file. */
 (() => {
   const SOURCE = 'data/menu.properties';
   const ICONS = 'assets/icons/bicchieri.svg';
 
-  // il parser dei file .properties è in assets/js/properties.js
+  // The .properties parser lives in assets/js/properties.js
   const { parse } = window.AquaProps;
 
-  /* ---------- Dal file al modello della carta ---------- */
+  /* ---------- From the file to the menu model ---------- */
   const build = (props) => {
     const get = (k, d = '') => (props.has(k) ? props.get(k) : d);
     const list = (k) => get(k).split(',').map((s) => s.trim()).filter(Boolean);
@@ -56,7 +56,7 @@
     return cache;
   };
 
-  /* ---------- Pezzi di HTML ---------- */
+  /* ---------- HTML snippets ---------- */
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
   const glass = (model, id, cls = 'glass') => {
@@ -84,7 +84,7 @@
     return used.map((id) => `<li>${glass(model, id, 'legend__glass')}<span>${esc(model.bicchieri[id] || id)}</span></li>`).join('');
   };
 
-  /* ---------- Pagina carta.html ---------- */
+  /* ---------- carta.html page ---------- */
   const page = document.querySelector('[data-carta-page]');
   if (page) {
     const nav = page.querySelector('[data-carta-nav]');
@@ -100,13 +100,13 @@
       page.querySelector('[data-carta-legend]').innerHTML = legend(model);
       page.classList.add('is-ready');
 
-      // categoria attiva nella barra in alto
+      // Active category in the sticky bar at the top
       const links = [...nav.querySelectorAll('a')];
-      let jumping = 0; // durante il salto a una categoria la barra non si aggiorna da sola
+      let jumping = 0; // while jumping to a category the bar does not update itself
       const setActive = (id, smooth) => links.forEach((a) => {
         const on = a.getAttribute('href') === `#${id}`;
         a.classList.toggle('is-active', on);
-        // centra la categoria attiva nella barra, senza muovere la pagina
+        // Centre the active category in the bar without moving the page
         if (on) nav.scrollTo({ left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2, behavior: smooth ? 'smooth' : 'auto' });
       });
       const obs = new IntersectionObserver((entries) => {
@@ -114,7 +114,7 @@
         entries.forEach((en) => { if (en.isIntersecting) setActive(en.target.id, true); });
       }, { rootMargin: '-30% 0px -60% 0px' });
 
-      // salto a una categoria: il titolo si ferma appena sotto la barra delle categorie
+      // Jump to a category: its title stops just below the category bar
       const jumpTo = (id, smooth) => {
         const sec = document.getElementById(id);
         if (!sec) return;
@@ -136,7 +136,7 @@
         jumpTo(id, true);
       });
       body.querySelectorAll('.carta__cat').forEach((s) => obs.observe(s));
-      // in fondo alla pagina l'ultima categoria non arriva a metà schermo: la attiviamo noi
+      // At the bottom of the page the last category never reaches mid-screen, so activate it here
       window.addEventListener('scroll', () => {
         if (window.innerHeight + window.scrollY < document.documentElement.scrollHeight - 4) return;
         const last = links[links.length - 1];
@@ -154,7 +154,7 @@
     });
   }
 
-  /* ---------- Foto di sfondo della carta: il percorso è in data/foto.properties ---------- */
+  /* ---------- Menu background photo: the path is in data/foto.properties ---------- */
   const sfondi = document.querySelectorAll('img[data-foto]');
   if (sfondi.length) {
     window.AquaProps.load('data/foto.properties').then((p) => {

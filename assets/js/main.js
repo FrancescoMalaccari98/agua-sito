@@ -1,4 +1,4 @@
-/* Aqua — interazioni */
+/* Aqua — home page interactions (index.html) */
 (() => {
   window.aquaReady = true;
   const $ = (s, c = document) => c.querySelector(s);
@@ -6,11 +6,11 @@
   const root = document.documentElement;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Foto: i percorsi arrivano da data/foto.properties ----------
-     Ogni <img> (o <source>) con data-foto="chiave" prende "chiave.foto" e "chiave.alt";
-     data-foto-variante="mobile" prende "chiave.foto.mobile". */
-  let foto = null;         // il contenuto del file, quando è arrivato
-  let heroFinale = false;  // senza video la copertina dell'hero mostra il drink finito
+  /* ---------- Photos: paths come from data/foto.properties ----------
+     Every <img> (or <source>) with data-foto="key" gets "key.foto" and "key.alt";
+     data-foto-variante="mobile" gets "key.foto.mobile". */
+  let foto = null;         // the parsed file, once it has arrived
+  let heroFinale = false;  // without video, the hero cover shows the finished drink
   const applyFoto = () => {
     if (!foto) return;
     $$('[data-foto]').forEach((el) => {
@@ -26,7 +26,7 @@
     .then((p) => { foto = p; applyFoto(); return p; })
     .catch(() => null);
 
-  /* ---------- Intro + ingresso hero ---------- */
+  /* ---------- Intro + hero entrance ---------- */
   const hero = $('.hero');
   $$('[data-hero-step]', hero).forEach((el, i) => el.style.setProperty('--i', i));
   const startHero = () => setTimeout(() => {
@@ -45,7 +45,7 @@
         root.classList.remove('has-intro');
         document.body.style.overflow = '';
       }, 1150);
-    }, 2700); // la Q, poi la parola che si apre, poi una breve pausa sul logo intero
+    }, 2700); // the Q, then the word opening up, then a short pause on the full logo
   } else {
     root.classList.remove('has-intro');
     const heroImg = $('.hero__media img');
@@ -53,17 +53,16 @@
     else { heroImg.addEventListener('load', startHero, { once: true }); setTimeout(startHero, 1200); }
   }
 
-  /* ---------- Video dell'hero ----------
-     Parte dalla copertina (il bicchiere vuoto, primo fotogramma), la copertina svanisce
-     quando il video parte e torna a fine giro, prima di ricominciare.
-     Se il browser blocca l'avvio automatico (iPhone con risparmio energetico), la stessa
-     clip viene caricata come immagine: Safari riproduce gli MP4 dentro <img> come una GIF,
-     e le immagini non sono soggette al blocco. */
+  /* ---------- Hero video ----------
+     Starts from the cover image (the empty glass, first frame); the cover fades out when
+     the video plays and comes back at the end of each loop, before it restarts.
+     If the browser blocks autoplay (iPhone in Low Power Mode), the same clip is loaded
+     as an image: Safari plays MP4 files inside <img> like a GIF, and images are not blocked. */
   const heroVideo = (() => {
     const video = $('.hero__video');
     if (!video) return null;
     const media = $('.hero__media');
-    // senza video la copertina mostra il drink finito invece del bicchiere vuoto
+    // Without video, the cover shows the finished drink instead of the empty glass
     const stillFull = () => { heroFinale = true; applyFoto(); };
     const conn = navigator.connection;
     if (reduceMotion || (conn && conn.saveData) || !video.canPlayType('video/mp4')) {
@@ -72,16 +71,16 @@
       return null;
     }
     const small = window.matchMedia('(max-width: 640px)').matches;
-    const FADE = 0.9;   // secondi di dissolvenza, come la transizione CSS
-    const PAUSE = 1400; // ms sulla copertina tra un giro e l'altro
+    const FADE = 0.9;   // fade length in seconds, same as the CSS transition
+    const PAUSE = 1400; // ms spent on the cover between two loops
     let started = false, inView = true, restartTimer = 0, asImage = false;
 
     video.muted = true;
     video.defaultMuted = true;
-    // HEVC: stessa qualità con circa il 30% di peso in meno (Safari, Chrome su Mac, iPhone);
-    // altrimenti H.264, che va ovunque
+    // HEVC: same quality at roughly 30% smaller size (Safari, Chrome on Mac, iPhone);
+    // otherwise H.264, which plays everywhere
     const hevc = video.canPlayType('video/mp4; codecs="hvc1.1.6.L123.B0"') !== '';
-    // i file arrivano da data/foto.properties (hero.video…): prima l'HEVC, poi l'H.264 di riserva
+    // Files come from data/foto.properties (hero.video…): HEVC first, H.264 as the fallback
     let sources = [];
     let h264 = '';
     fotoReady.then((p) => {
@@ -90,11 +89,11 @@
       sources = [hevc && p && p.get(`${key}.hevc`), h264].filter(Boolean);
       if (!sources.length) { video.remove(); stillFull(); return; }
       video.src = sources.shift();
-      video.preload = 'auto'; // inizia a scaricarsi subito, così parte appena la pagina è pronta
+      video.preload = 'auto'; // start downloading right away, so it plays as soon as the page is ready
       play();
     });
 
-    // riserva: la clip come immagine animata (solo Safari la sa riprodurre così)
+    // Fallback: the clip as an animated image (only Safari can play it this way)
     let imageTried = false;
     const imageFallback = () => {
       if (imageTried) return;
@@ -104,14 +103,14 @@
       img.alt = '';
       img.setAttribute('aria-hidden', 'true');
       img.onload = () => {
-        if (!img.naturalWidth || !video.paused) return; // nel frattempo il video è partito
+        if (!img.naturalWidth || !video.paused) return; // the video started in the meantime
         asImage = true;
         video.pause();
         video.replaceWith(img);
         media.classList.add('is-playing');
         gestureOff();
       };
-      // se l'HEVC come immagine non va, si riprova con H.264; altrimenti resta la copertina
+      // If HEVC fails as an image, retry with H.264; otherwise the cover stays
       let retried = false;
       img.onerror = () => { if (!retried && h264) { retried = true; img.src = h264; } };
       img.src = video.currentSrc || video.src;
@@ -122,7 +121,7 @@
       const p = video.play();
       if (p) p.catch((err) => { if (err && err.name === 'NotAllowedError') imageFallback(); });
     };
-    // in ogni caso, al primo tocco si riprova con il video vero
+    // In any case, the first tap retries the real video
     const onGesture = () => { if (video.paused && !video.ended) play(); };
     const gestureOff = () => ['touchend', 'click'].forEach((ev) => document.removeEventListener(ev, onGesture));
     ['touchend', 'click'].forEach((ev) => document.addEventListener(ev, onGesture, { passive: true }));
@@ -141,7 +140,7 @@
       }, PAUSE);
     });
     video.addEventListener('error', () => {
-      // se l'HEVC dichiarato non si decodifica, si riprova una volta con H.264
+      // If the advertised HEVC cannot be decoded, retry once with H.264
       if (sources.length) { video.src = sources.shift(); play(); }
       else { video.remove(); media.classList.remove('is-playing'); stillFull(); }
     });
@@ -156,8 +155,8 @@
     return { start() { started = true; play(); } };
   })();
 
-  /* ---------- Link interni: scorrono alla sezione senza scrivere #… nell'indirizzo ----------
-     Così ricaricando o riaprendo il sito si riparte sempre dall'inizio. */
+  /* ---------- In-page links: scroll to the section without writing #… in the address ----------
+     So reloading or reopening the site always starts from the top. */
   window.scrollTo({ top: 0, behavior: 'instant' });
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href^="#"]');
@@ -168,22 +167,22 @@
     e.preventDefault();
     const behavior = reduceMotion ? 'auto' : 'smooth';
     if (!target) { window.scrollTo({ top: 0, behavior }); return; }
-    // si allinea il titolo della sezione ("01 — Filosofia"), non il bordo della sezione
-    // con il suo margine interno; scendendo l'header si nasconde, salendo ricompare
+    // Align the section label ("01 — Filosofia"), not the section edge with its padding;
+    // the header hides when scrolling down and comes back when scrolling up
     const GAP = 28;
     const anchor = target.matches('section') ? ($('.section-index', target) || target) : target;
-    // posizione nella pagina ignorando le animazioni di comparsa (che spostano di qualche px)
+    // Position in the page, ignoring reveal animations (they shift elements by a few px)
     let y = 0;
     for (let el = anchor; el; el = el.offsetParent) y += el.offsetTop;
     const goingDown = y - GAP > window.scrollY;
     const offset = goingDown && y - GAP > 600 ? GAP : $('.site-header').offsetHeight + GAP;
     window.scrollTo({ top: Math.max(0, y - offset), behavior });
-    // porta anche il focus (tastiera e lettori di schermo) senza un secondo salto
+    // Also move focus (keyboard and screen readers) without a second jump
     if (!target.matches('a, button, input, select, textarea, [tabindex]')) target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });
   });
 
-  /* ---------- Header: sfondo e comparsa allo scroll ---------- */
+  /* ---------- Header: background and show/hide on scroll ---------- */
   const header = $('.site-header');
   let lastY = window.scrollY;
   let ticking = false;
@@ -201,7 +200,7 @@
     if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
   }, { passive: true });
 
-  /* ---------- Parallasse della citazione ---------- */
+  /* ---------- Quote band parallax ---------- */
   const para = $('[data-parallax]');
   function parallax() {
     if (!para || reduceMotion) return;
@@ -212,7 +211,7 @@
   }
   onScroll();
 
-  /* ---------- Menu mobile ---------- */
+  /* ---------- Mobile menu ---------- */
   const burger = $('.burger');
   const mobileMenu = $('#mobile-menu');
   const setMenu = (open) => {
@@ -237,7 +236,7 @@
   });
   window.matchMedia('(min-width: 1025px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
 
-  /* ---------- Voce di navigazione attiva ---------- */
+  /* ---------- Active navigation item ---------- */
   const navLinks = $$('.nav__list a');
   const navObs = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
@@ -247,7 +246,7 @@
   }, { rootMargin: '-45% 0px -50% 0px' });
   $$('main > section[id]').forEach((s) => navObs.observe(s));
 
-  /* ---------- Numeri che contano ---------- */
+  /* ---------- Counting numbers (24 / 12 / 0) ---------- */
   const countUp = (el) => {
     const target = Number(el.dataset.count);
     if (reduceMotion || target === 0) { el.textContent = target; return; }
@@ -262,7 +261,7 @@
     requestAnimationFrame(tick);
   };
 
-  /* ---------- Rivelazione allo scroll ---------- */
+  /* ---------- Reveal on scroll ---------- */
   const revealObs = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (!en.isIntersecting) return;
@@ -278,12 +277,12 @@
     revealObs.observe(el);
   });
 
-  /* ---------- Orari: oggi e stato apertura ----------
-     Sempre all'ora italiana, anche per chi apre il sito da un altro fuso orario.
-     Prima dell'inaugurazione dice "Inaugurazione …"; dopo si calcola da solo dagli orari
-     qui sotto e si aggiorna ogni minuto (e allo scadere del conto alla rovescia). */
-  // giorno 0=dom..6=sab → [apertura, chiusura] in minuti; oltre 1440 = dopo mezzanotte
-  // martedì–venerdì 17:00–22:00 · sabato e domenica 22:00–02:00 · lunedì chiuso
+  /* ---------- Opening hours: open/closed status ----------
+     Always computed in Italian time, even for visitors in another time zone.
+     Before the opening night it says "Inaugurazione …"; afterwards it is computed from the
+     hours below and refreshed every minute (and when the countdown ends). */
+  // day 0=Sun..6=Sat → [opening, closing] in minutes; above 1440 = after midnight
+  // Tue–Fri 17:00–22:00 · Sat and Sun 22:00–02:00 · Monday closed
   const HOURS = { 0: [1320, 1560], 1: null, 2: [1020, 1320], 3: [1020, 1320], 4: [1020, 1320], 5: [1020, 1320], 6: [1320, 1560] };
   const DAYS = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
   const romeClock = new Intl.DateTimeFormat('en-GB', {
@@ -300,7 +299,7 @@
   const beforeOpening = () => !!opening && Date.now() < opening.getTime();
 
   const openStatus = () => {
-    // prima dell'inaugurazione nessuno stato deve dire "aperto"
+    // Before the opening night, no status may say "open"
     if (beforeOpening()) {
       const openingDay = opening.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', timeZone: 'Europe/Rome' });
       return { open: false, text: `Inaugurazione ${openingDay}` };
@@ -318,7 +317,7 @@
   };
 
   const updateStatus = () => {
-    // ciò che annuncia l'inaugurazione (etichetta sulla foto, riga nel menu mobile) sparisce dopo
+    // Anything announcing the opening (photo badge, mobile menu line) disappears afterwards
     $$('[data-only-before-opening]').forEach((el) => { el.hidden = !beforeOpening(); });
     const { open, text } = openStatus();
     $$('[data-open-status]').forEach((el) => {
@@ -328,11 +327,11 @@
     });
   };
   updateStatus();
-  // si ricontrolla all'inizio di ogni minuto: alle 17:00 diventa "Aperto ora", alle 22:00 si chiude
+  // Re-check at the start of every minute: at 17:00 it becomes "Aperto ora", at 22:00 it closes
   const nextMinute = () => setTimeout(() => { updateStatus(); nextMinute(); }, 60000 - (Date.now() % 60000) + 50);
   nextMinute();
 
-  /* ---------- Conto alla rovescia all'inaugurazione ---------- */
+  /* ---------- Countdown to the opening night ---------- */
   if (countdown) {
     const heroStatus = $('.hero__meta .status');
     const nums = Object.fromEntries($$('[data-unit]', countdown).map((el) => [el.dataset.unit, el]));
@@ -343,11 +342,11 @@
       el.textContent = value;
       if (!reduceMotion) {
         el.classList.remove('is-tick');
-        void el.offsetWidth; // riavvia l'animazione
+        void el.offsetWidth; // restart the animation
         el.classList.add('is-tick');
       }
     };
-    // allo scadere: il conto alla rovescia lascia il posto allo stato aperto/chiuso calcolato dagli orari
+    // When it ends, the countdown makes room for the open/closed status computed from the hours
     const finish = () => {
       countdown.hidden = true;
       heroStatus.hidden = false;
@@ -361,12 +360,12 @@
       set('h', pad(Math.floor((sec % 86400) / 3600)));
       set('m', pad(Math.floor((sec % 3600) / 60)));
       set('s', pad(sec % 60));
-      // riallinea al secondo esatto successivo
+      // re-align to the next exact second
       setTimeout(render, 1000 - (Date.now() % 1000) + 5);
     };
     if (beforeOpening()) render(); else finish();
   }
 
-  /* ---------- Anno nel footer ---------- */
+  /* ---------- Year in the footer ---------- */
   $('[data-year]').textContent = new Date().getFullYear();
 })();
